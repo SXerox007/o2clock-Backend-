@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package accesstokenpb;
+
+import "google/api/annotations.proto";
+
+message AccessTokenRequest{
+    string access_token = 1;
+}
+
+message AccessTokenResponse{
+    string message = 1;
+    int32 code = 2;
+}
+
+service AccessTokenService{
+    rpc CheckAccessTokenService (AccessTokenRequest) returns (AccessTokenResponse){
+        option (google.api.http) = {
+            get: "/v1/user/accesstoken"
+		};
+    }
+}

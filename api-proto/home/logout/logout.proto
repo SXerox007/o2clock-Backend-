@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package logoutpb;
+
+import "google/api/annotations.proto";
+
+message LogoutRequest{
+    string access_token = 1;
+}
+
+message LogoutResponse{
+    string message = 1;
+    int32 code = 2;
+}
+
+service LogoutService{
+    rpc LogoutUserService (LogoutRequest) returns (LogoutResponse){
+        option (google.api.http) = {
+            post: "/v1/user/logout"
+            body:"*"
+		};
+    }
+}
