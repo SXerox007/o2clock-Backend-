@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net"
 	"o2clock/api-desc/home"
+	"o2clock/api-desc/home/chat"
 	"o2clock/api-desc/home/logout"
 	"o2clock/api-desc/onboarding/accesstoken"
 	"o2clock/api-desc/onboarding/login"
@@ -107,5 +108,7 @@ func rpcServices(srv *grpc.Server) {
 	login.RegisterLoginUserService(srv)
 	//verify user
 	home.RegisterVerifyUserService(srv)
+	//chat room
+	chat.RegisterChatRoomService(srv)
 
 }

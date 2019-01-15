@@ -23,7 +23,7 @@ func VerifyUser(image []byte, accessToken string) error {
 	}
 	defer rec.Close()
 	//TODO ---> Get the image url from db
-	dataImage := filepath.Join(DATA_DIR, "sumit.jpg")
+	dataImage := filepath.Join(DATA_DIR, "mix.jpg")
 
 	faces, err := rec.RecognizeFile(dataImage)
 	if err != nil {
@@ -43,8 +43,8 @@ func VerifyUser(image []byte, accessToken string) error {
 
 	// Now let's try to classify some not yet known image.
 
-	//testSumit := filepath.Join(DATA_DIR, "sumit.jpg")
-	sumit, err := rec.RecognizeSingle(image)
+	testSumit := filepath.Join(DATA_DIR, "eminem.jpg")
+	sumit, err := rec.RecognizeSingleFile(testSumit)
 	if err != nil {
 		log.Println("Face not recorganise not the same person")
 		return status.Errorf(
@@ -57,6 +57,14 @@ func VerifyUser(image []byte, accessToken string) error {
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_NOT_A_SINGLE_FACE))
 	}
+	id := rec.Classify(sumit.Descriptor)
+	if id < 0 {
+		log.Println("Can't classify")
+		return status.Errorf(
+			codes.Internal,
+			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL_SERVER))
+	}
+	log.Println("id", id)
 	log.Println("Image recorganise")
 	return nil
 }
