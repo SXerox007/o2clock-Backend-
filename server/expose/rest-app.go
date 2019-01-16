@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"o2clock/api-proto/home"
+	"o2clock/api-proto/home/chat"
 	"o2clock/api-proto/home/logout"
 	"o2clock/api-proto/onboarding/accesstoken"
 	"o2clock/api-proto/onboarding/login"
@@ -32,6 +33,7 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	err = logoutpb.RegisterLogoutServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = loginpb.RegisterLoginServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = homepb.RegisterVerifyServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
+	err = chatpb.RegisterChatRoomHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	if err != nil {
 		return err
 	}

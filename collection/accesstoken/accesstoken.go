@@ -11,8 +11,6 @@ import (
 	"o2clock/db/mongodb"
 	"time"
 
-	"o2clock/api-proto/onboarding/accesstoken"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/mongodb/mongo-go-driver/bson"
 	objectid "github.com/mongodb/mongo-go-driver/bson/primitive"
@@ -70,8 +68,8 @@ func createKey() *rsa.PrivateKey {
 	return key
 }
 
-func CheckAccessToken(req *accesstokenpb.AccessTokenRequest) error {
-	filter := bson.M{collections.PARAM_ACCESS_TOKEN: req.GetAccessToken()}
+func CheckAccessToken(req string) error {
+	filter := bson.M{collections.PARAM_ACCESS_TOKEN: req}
 	err := mongodb.CreateCollection(collections.COLLECTIONS_ACCESS_TOKEN).FindOne(context.Background(), filter).Decode(&AccessToken{})
 	if err != nil {
 		return status.Errorf(

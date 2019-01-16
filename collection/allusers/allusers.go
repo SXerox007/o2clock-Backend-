@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"o2clock/api-proto/home/chat"
 	"o2clock/api-proto/onboarding/register"
 	"o2clock/collection/accesstoken"
 	"o2clock/constants/collections"
@@ -38,6 +39,11 @@ type Users struct {
 	CaptureTime time.Time         `bson:"capture_time"`
 }
 
+/**
+*
+* Create the new User
+*
+**/
 func CreateUser(req *regsiterpb.RegisterUserRequest) (string, error) {
 	if err := validationCheck(req); err != nil {
 		return "", err
@@ -70,6 +76,41 @@ func CreateUser(req *regsiterpb.RegisterUserRequest) (string, error) {
 			fmt.Sprintln(errormsg.ERR_INTERNAL_OID, ok))
 	}
 	return accesstoken.CreateUserAccessToken(oid, req.GetUserName())
+}
+
+/**
+*
+* Get all the users
+*
+**/
+func GetAllUsers(req *chatpb.CommonRequest) ([]*chatpb.User, error) {
+	if err := accesstoken.CheckAccessToken(req.GetAccessToken()); err == nil {
+		res, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).Find(context.Background(), nil)
+		if err != nil {
+			return nil, status.Errorf(
+				codes.NotFound,
+				fmt.Sprintln(errormsg.ERR_MSG_INTERNAL, err))
+		} else {
+			var items []*chatpb.User
+			for res.Next(nil) {
+				item := Users{}
+				if err := res.Decode(&item); err != nil {
+					return nil, status.Errorf(
+						codes.Aborted,
+						fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE, err))
+				}
+				//items = append(items, &item)
+				items = append(items, &chatpb.User{
+					UserId:   item.ID.String(),
+					UserName: item.FirstName + " " + item.LastName,
+				})
+			}
+			return items, nil
+
+		}
+	} else {
+		return nil, err
+	}
 }
 
 func validationCheck(req *regsiterpb.RegisterUserRequest) error {

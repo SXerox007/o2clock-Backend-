@@ -27,9 +27,8 @@ func RegisterChatRoomService(srv *grpc.Server) {
 func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*chatpb.UserList, error) {
 	var err error
 	var data []*chatpb.User
-	var total int32
 	if dbsettings.IsEnableMongoDb() {
-		data, total, err = mdb.GetAllUsers(req)
+		data, err = mdb.GetAllUsers(req)
 	}
 	if dbsettings.IsEnablePostgres() {
 		//err = pdb.LogoutUser(req)
@@ -38,7 +37,7 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 		//success
 		return &chatpb.UserList{
 			Users: data,
-			Total: total,
+			Total: int32(len(data)),
 			CommonResponse: &chatpb.CommonResponse{
 				Message: appconstant.MSG_SUCCESS,
 				Code:    http.StatusOK,

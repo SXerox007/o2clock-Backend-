@@ -22,7 +22,7 @@ func RegisterAccessTokenService(srv *grpc.Server) {
 func (*Server) CheckAccessTokenService(ctx context.Context, req *accesstokenpb.AccessTokenRequest) (*accesstokenpb.AccessTokenResponse, error) {
 	var err error
 	if dbsettings.IsEnableMongoDb() {
-		err = mdb.CheckAccessToken(req)
+		err = mdb.CheckAccessToken(req.GetAccessToken())
 	}
 	if dbsettings.IsEnablePostgres() {
 		err = pdb.CheckAccessToken(req)

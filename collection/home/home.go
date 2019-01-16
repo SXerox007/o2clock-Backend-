@@ -43,7 +43,7 @@ func VerifyUser(image []byte, accessToken string) error {
 
 	// Now let's try to classify some not yet known image.
 
-	testSumit := filepath.Join(DATA_DIR, "eminem.jpg")
+	testSumit := filepath.Join(DATA_DIR, "sumit.jpg")
 	sumit, err := rec.RecognizeSingleFile(testSumit)
 	if err != nil {
 		log.Println("Face not recorganise not the same person")
@@ -57,7 +57,7 @@ func VerifyUser(image []byte, accessToken string) error {
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_NOT_A_SINGLE_FACE))
 	}
-	id := rec.Classify(sumit.Descriptor)
+	id := rec.ClassifyThreshold(sumit.Descriptor, 0.6)
 	if id < 0 {
 		log.Println("Can't classify")
 		return status.Errorf(
