@@ -68,8 +68,8 @@ func createKey() *rsa.PrivateKey {
 	return key
 }
 
-func CheckAccessToken(req string) error {
-	filter := bson.M{collections.PARAM_ACCESS_TOKEN: req}
+func CheckAccessToken(accessToken string) error {
+	filter := bson.M{collections.PARAM_ACCESS_TOKEN: accessToken}
 	err := mongodb.CreateCollection(collections.COLLECTIONS_ACCESS_TOKEN).FindOne(context.Background(), filter).Decode(&AccessToken{})
 	if err != nil {
 		return status.Errorf(
@@ -77,6 +77,24 @@ func CheckAccessToken(req string) error {
 			fmt.Sprintln(errormsg.ERR_MSG_INVALID_ACCESS_TOKEN))
 	}
 	return nil
+}
+
+/**
+*
+* Get all the data through access token
+*
+**/
+func GetAllAccessTokenInfo(accessToken string) (*AccessToken, error) {
+	data := &AccessToken{}
+	filter := bson.M{collections.PARAM_ACCESS_TOKEN: accessToken}
+	res := mongodb.CreateCollection(collections.COLLECTIONS_ACCESS_TOKEN).FindOne(context.Background(), filter)
+	//for single data decode
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(
+			codes.Aborted,
+			fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE, err))
+	}
+	return data, nil
 }
 
 func UpdateAccessToken(userid objectid.ObjectID, username string) (string, error) {

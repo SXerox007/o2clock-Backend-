@@ -113,6 +113,42 @@ func GetAllUsers(req *chatpb.CommonRequest) ([]*chatpb.User, error) {
 	}
 }
 
+/**
+*
+* Get login user info
+*
+**/
+func GetUserInfo(req *chatpb.CommonRequest) (*chatpb.User, error) {
+	data, err := accesstoken.GetAllAccessTokenInfo(req.GetAccessToken())
+	if err != nil {
+		return nil, err
+	} else {
+		user, _ := GetUserInfoById(data.UserId)
+		return &chatpb.User{
+			UserId:   user.ID.String(),
+			UserName: user.FirstName + " " + user.LastName,
+		}, nil
+	}
+}
+
+/**
+*
+* Get the user info by id
+*
+**/
+func GetUserInfoById(userId objectid.ObjectID) (*Users, error) {
+	data := &Users{}
+	filter := bson.M{collections.PARAM_ID: userId}
+	res := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter)
+	//for single data decode
+	if err := res.Decode(data); err != nil {
+		return nil, status.Errorf(
+			codes.Aborted,
+			fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE, err))
+	}
+	return data, nil
+}
+
 func validationCheck(req *regsiterpb.RegisterUserRequest) error {
 	filter := bson.M{collections.PARAM_USER_NAME: req.GetUserName()}
 	err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter).Decode(&Users{})

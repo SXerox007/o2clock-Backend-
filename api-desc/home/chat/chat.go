@@ -7,6 +7,8 @@ import (
 	"o2clock/constants/appconstant"
 
 	mdb "o2clock/collection/chat"
+	pdb "o2clock/table/chat"
+
 	dbsettings "o2clock/settings/db"
 
 	"google.golang.org/grpc"
@@ -31,7 +33,7 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 		data, err = mdb.GetAllUsers(req)
 	}
 	if dbsettings.IsEnablePostgres() {
-		//err = pdb.LogoutUser(req)
+		data, err = pdb.GetAllUsers(req)
 	}
 	if err == nil {
 		//success
@@ -49,7 +51,19 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 
 // Get signin user details
 func (*Server) GetUserDetails(ctx context.Context, req *chatpb.CommonRequest) (*chatpb.User, error) {
-	return nil, nil
+	var err error
+	var data *chatpb.User
+	if dbsettings.IsEnableMongoDb() {
+		data, err = mdb.GetUserInfo(req)
+	}
+	if dbsettings.IsEnablePostgres() {
+		//data, err = pdb.GetAllUsers(req)
+	}
+	if err == nil {
+		//success
+		return data, nil
+	}
+	return nil, err
 }
 
 // chat stream for both side bi-directional streaming
