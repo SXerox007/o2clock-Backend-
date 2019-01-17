@@ -2,8 +2,9 @@ package collections
 
 //all collections
 const (
-	COLLECTIONS_ALL_USERS    = "all_users"
-	COLLECTIONS_ACCESS_TOKEN = "all_tokens"
+	COLLECTIONS_ALL_USERS     = "all_users"
+	COLLECTIONS_ACCESS_TOKEN  = "all_tokens"
+	COLLECTIONS_ALL_P2P_CHATS = "all_single_chats"
 )
 
 //db params

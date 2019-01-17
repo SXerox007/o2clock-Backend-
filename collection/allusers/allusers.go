@@ -102,7 +102,7 @@ func GetAllUsers(req *chatpb.CommonRequest) ([]*chatpb.User, error) {
 				//items = append(items, &item)
 				items = append(items, &chatpb.User{
 					UserId:   item.ID.String(),
-					UserName: item.FirstName + " " + item.LastName,
+					UserName: item.FirstName + " " + item.LastName + "\n" + item.Email,
 				})
 			}
 			return items, nil
