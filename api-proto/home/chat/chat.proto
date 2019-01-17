@@ -193,6 +193,14 @@ service ChatRoom {
             get: "/v1/chat/chathistory"
 		};
     };
+
+    // Get signin user details
+    rpc GetUserDetails(CommonRequest) returns (User){
+        option (google.api.http) = {
+            get : "/v1/chat/user/details"
+        };
+    };
+
     // Leave the group
     rpc LeaveGroup(LeaveGroupRequest) returns (CommonResponse){
         option (google.api.http) = {

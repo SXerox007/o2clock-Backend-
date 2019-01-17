@@ -10,8 +10,6 @@ import (
 	db "o2clock/db/postgres"
 	"time"
 
-	"o2clock/api-proto/onboarding/accesstoken"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -69,20 +67,20 @@ func createKey() *rsa.PrivateKey {
 	return key
 }
 
-func CheckAccessToken(req *accesstokenpb.AccessTokenRequest) error {
+func CheckAccessToken(token string) error {
 	sqlStatement := SQL_STATEMENT_CHECK_TOKEN
 	var accessToken AccessToken
-	row := db.GetClient().QueryRow(sqlStatement, req.GetAccessToken())
+	row := db.GetClient().QueryRow(sqlStatement, token)
 	switch err := row.Scan(&accessToken.UserId); err {
 	case sql.ErrNoRows:
 		return status.Errorf(
-			codes.Internal,
+			codes.PermissionDenied,
 			fmt.Sprintln(errormsg.ERR_MSG_INVALID_ACCESS_TOKEN, err))
 	case nil:
 		return nil
 	default:
 		return status.Errorf(
-			codes.Internal,
+			codes.PermissionDenied,
 			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL_SERVER, err))
 	}
 }

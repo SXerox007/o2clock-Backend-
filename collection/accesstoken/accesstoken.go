@@ -73,7 +73,7 @@ func CheckAccessToken(req string) error {
 	err := mongodb.CreateCollection(collections.COLLECTIONS_ACCESS_TOKEN).FindOne(context.Background(), filter).Decode(&AccessToken{})
 	if err != nil {
 		return status.Errorf(
-			codes.Aborted,
+			codes.PermissionDenied,
 			fmt.Sprintln(errormsg.ERR_MSG_INVALID_ACCESS_TOKEN))
 	}
 	return nil

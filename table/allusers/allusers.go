@@ -2,11 +2,13 @@ package allusers
 
 import (
 	"fmt"
+	"o2clock/api-proto/home/chat"
 	"o2clock/api-proto/onboarding/register"
 	"o2clock/constants/errormsg"
 	db "o2clock/db/postgres"
 	"o2clock/table/accesstoken"
 	"o2clock/utils/pswdmanager"
+
 	"time"
 
 	"google.golang.org/grpc/codes"
@@ -22,6 +24,7 @@ const (
 	RETURNING id`
 	SQL_STATEMENT_GET_USER_DATA_USING_USER_NAME = `SELECT * FROM all_users WHERE user_name=$1;`
 	SQL_STATEMENT_GET_USER_DATA_USING_EMAIL     = `SELECT * FROM all_users WHERE email=$1;`
+	SQL_STATEMENT_GET_ALL_USERS                 = `SELECT * FROM all_users;`
 )
 
 type Users struct {
@@ -58,6 +61,37 @@ func CreateUser(req *regsiterpb.RegisterUserRequest) (string, error) {
 	}
 	return accesstoken.CreateUserAccessToken(id, req.GetUserName())
 
+}
+
+func GetAllUsers(req *chatpb.CommonRequest) ([]*chatpb.User, error) {
+	if err := accesstoken.CheckAccessToken(req.GetAccessToken()); err == nil {
+		sqlStatement := SQL_STATEMENT_GET_ALL_USERS
+		rows, err := db.GetClient().Query(sqlStatement)
+		if err != nil {
+			return nil, status.Errorf(
+				codes.Internal,
+				fmt.Sprintln(errormsg.ERR_NO_ROWS_Users, err))
+		} else {
+			defer rows.Close()
+			var data []*chatpb.User
+			var firstName, lastName, id string
+			var index int
+			for rows.Next() {
+				err := rows.Scan(&firstName, &lastName, &id)
+				if err != nil {
+					return nil, status.Errorf(
+						codes.Internal,
+						fmt.Sprintln(errormsg.ERR_MSG_INTERNAL_SERVER, err))
+				} else {
+					data[index].UserName = firstName + " " + lastName
+					data[index].UserId = id
+				}
+			}
+			return data, nil
+		}
+	} else {
+		return nil, err
+	}
 }
 
 func validateUser(req *regsiterpb.RegisterUserRequest) error {

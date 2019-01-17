@@ -47,6 +47,11 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 	return nil, err
 }
 
+// Get signin user details
+func (*Server) GetUserDetails(ctx context.Context, req *chatpb.CommonRequest) (*chatpb.User, error) {
+	return nil, nil
+}
+
 // chat stream for both side bi-directional streaming
 func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 	return nil
@@ -54,6 +59,7 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 
 // single chat p2p
 func (*Server) StartP2PChat(ctx context.Context, req *chatpb.P2PChatRequest) (*chatpb.CommonResponse, error) {
+
 	return nil, nil
 }
 
@@ -107,7 +113,6 @@ func (*Server) KickoutUserFromGroup(ctx context.Context, req *chatpb.KickMember)
 // Get the chat history
 func (*Server) GetChatHistory(ctx context.Context, req *chatpb.ReadHistoryRequest) (*chatpb.ReadHistoryResponse, error) {
 	return nil, nil
-
 }
 
 // Leave the group

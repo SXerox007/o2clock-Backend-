@@ -25,7 +25,7 @@ func (*Server) CheckAccessTokenService(ctx context.Context, req *accesstokenpb.A
 		err = mdb.CheckAccessToken(req.GetAccessToken())
 	}
 	if dbsettings.IsEnablePostgres() {
-		err = pdb.CheckAccessToken(req)
+		err = pdb.CheckAccessToken(req.GetAccessToken())
 
 	}
 	if err == nil {
