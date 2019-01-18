@@ -53,7 +53,11 @@ func GetUserInfo(req *chatpb.CommonRequest) (*chatpb.User, error) {
 * Start the Person to person chat
 *
 **/
-func StartP2PChat(req *chatpb.P2PChatRequest) error {
+func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
+
+	//TODO: All current chats and groups chatid in another collection
+	//TODO: check wheater the senderid and reciverid is in same row or not
+
 	data := P2PChat{
 		SenderId:    req.GetUserInfo().GetUserId(),
 		SenderName:  req.GetUserInfo().GetUserName(),
@@ -64,16 +68,25 @@ func StartP2PChat(req *chatpb.P2PChatRequest) error {
 	}
 	res, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).InsertOne(context.Background(), data)
 	if err != nil {
-		return status.Errorf(
+		return "", status.Errorf(
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL, err))
 	}
 
-	_, ok := res.InsertedID.(objectid.ObjectID)
+	id, ok := res.InsertedID.(objectid.ObjectID)
 	if !ok {
-		return status.Errorf(
+		return "", status.Errorf(
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_INTERNAL_OID, ok))
 	}
-	return nil
+	return id.String(), nil
+}
+
+/**
+*
+*  P2P chat validation
+*
+**/
+func P2PReciverAndUserValidation(req *chatpb.P2PChatRequest) error {
+
 }

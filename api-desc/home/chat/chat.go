@@ -72,18 +72,22 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 }
 
 // single chat p2p
-func (*Server) StartP2PChat(ctx context.Context, req *chatpb.P2PChatRequest) (*chatpb.CommonResponse, error) {
+func (*Server) StartP2PChat(ctx context.Context, req *chatpb.P2PChatRequest) (*chatpb.P2PChatResponse, error) {
 	var err error
+	var id string
 	if dbsettings.IsEnableMongoDb() {
-		err = mdb.StartP2PChat(req)
+		id, err = mdb.StartP2PChat(req)
 	}
 	if dbsettings.IsEnablePostgres() {
 		//data, err = pdb.GetAllUsers(req)
 	}
 	if err == nil {
-		return &chatpb.CommonResponse{
-			Message: appconstant.MSG_SUCCESS,
-			Code:    http.StatusOK,
+		return &chatpb.P2PChatResponse{
+			ChatId: id,
+			CommmonResponse: &chatpb.CommonResponse{
+				Message: appconstant.MSG_SUCCESS,
+				Code:    http.StatusOK,
+			},
 		}, nil
 	}
 	return nil, err

@@ -110,6 +110,11 @@ message P2PChatRequest{
     User reciver_info = 2;
 }
 
+message P2PChatResponse{
+    CommonResponse commmonResponse = 1;
+    string chat_id  = 2;
+}
+
 
 message AllChats{
     repeated User all_users = 1;
@@ -122,7 +127,7 @@ service ChatRoom {
     rpc Chat(stream ChatMessage) returns (stream ChatMessage){
     };
     // single chat p2p
-    rpc StartP2PChat(P2PChatRequest) returns (CommonResponse){
+    rpc StartP2PChat(P2PChatRequest) returns (P2PChatResponse){
         option (google.api.http) = {
             post: "/v1/chat/create/p2p"
             body:"*"
