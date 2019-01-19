@@ -15,4 +15,6 @@ const (
 	PARAM_ID           = "_id"
 	PARAM_PSWD         = "password"
 	PARAM_USER_ID      = "user_id"
+	PARAM_SENDER_ID    = "sender_id"
+	PARAM_RECIVER_ID   = "reciver_id"
 )

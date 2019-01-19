@@ -3,6 +3,7 @@ package chat
 import (
 	"context"
 	"fmt"
+	"log"
 	"o2clock/api-proto/home/chat"
 	"o2clock/collection/allusers"
 	"o2clock/constants/collections"
@@ -10,6 +11,7 @@ import (
 	"o2clock/db/mongodb"
 	"time"
 
+	"github.com/mongodb/mongo-go-driver/bson"
 	objectid "github.com/mongodb/mongo-go-driver/bson/primitive"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -58,6 +60,13 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 	//TODO: All current chats and groups chatid in another collection
 	//TODO: check wheater the senderid and reciverid is in same row or not
 
+	chatid, err := P2PReciverAndUserValidation(req)
+	if err == nil {
+		return chatid, err
+	}
+
+	log.Println("Error", err)
+
 	data := P2PChat{
 		SenderId:    req.GetUserInfo().GetUserId(),
 		SenderName:  req.GetUserInfo().GetUserName(),
@@ -87,6 +96,15 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 *  P2P chat validation
 *
 **/
-func P2PReciverAndUserValidation(req *chatpb.P2PChatRequest) error {
-
+func P2PReciverAndUserValidation(req *chatpb.P2PChatRequest) (string, error) {
+	data := &P2PChat{}
+	filter := bson.M{collections.PARAM_SENDER_ID: req.GetUserInfo().GetUserId(), collections.PARAM_RECIVER_ID: req.GetReciverInfo().GetUserId()}
+	res := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).FindOne(context.Background(), filter)
+	if err := res.Decode(data); err != nil {
+		return "", status.Errorf(
+			codes.Aborted,
+			fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE))
+	} else {
+		return data.ID.String(), nil
+	}
 }
