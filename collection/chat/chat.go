@@ -32,6 +32,18 @@ type P2PChat struct {
 	CaptureTime time.Time         `bson:"capture_time"`
 }
 
+// type AllChatsByUser struct {
+// 	ID          objectid.ObjectID `bson:"_id,omitempty"`
+// 	SenderId    string            `bson:"sender_id"`
+// 	ReciverId   string            `bson:"reciver_id"`
+// 	SenderName  string            `bson:"sender_name"`
+// 	ReciverName string            `bson:"reciver_name"`
+// 	ChatId      objectid.ObjectID `bson:"chat_id,omitempty"`
+// 	IsGroupChat bool              `bson:"is_group_chat"`
+// 	Version     string            `bson:"version"`
+// 	CaptureTime time.Time         `bson:"capture_time"`
+// }
+
 /**
 *
 * Get all the users
@@ -101,9 +113,15 @@ func P2PReciverAndUserValidation(req *chatpb.P2PChatRequest) (string, error) {
 	filter := bson.M{collections.PARAM_SENDER_ID: req.GetUserInfo().GetUserId(), collections.PARAM_RECIVER_ID: req.GetReciverInfo().GetUserId()}
 	res := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).FindOne(context.Background(), filter)
 	if err := res.Decode(data); err != nil {
-		return "", status.Errorf(
-			codes.Aborted,
-			fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE))
+		filter := bson.M{collections.PARAM_SENDER_ID: req.GetReciverInfo().GetUserId(), collections.PARAM_RECIVER_ID: req.GetUserInfo().GetUserId()}
+		res := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).FindOne(context.Background(), filter)
+		if err := res.Decode(data); err != nil {
+			return "", status.Errorf(
+				codes.Aborted,
+				fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE))
+		} else {
+			return data.ID.String(), nil
+		}
 	} else {
 		return data.ID.String(), nil
 	}

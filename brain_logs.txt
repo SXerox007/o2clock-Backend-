@@ -332,3 +332,8 @@ INFO: 2019/01/19 01:15:46 brain.go:46: Start trace Important Error
 ERROR: 2019/01/19 01:17:03 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
 ERROR: 2019/01/19 01:17:08 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
 INFO: 2019/01/19 18:50:14 brain.go:96: Exit the server with  interrupt
+INFO: 2019/01/19 23:23:48 brain.go:46: Start trace Important Error
+ERROR: 2019/01/19 23:37:02 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+INFO: 2019/01/19 23:43:42 brain.go:96: Exit the server with  interrupt
+INFO: 2019/01/19 23:45:08 brain.go:46: Start trace Important Error
+INFO: 2019/01/19 23:45:28 brain.go:96: Exit the server with  interrupt
