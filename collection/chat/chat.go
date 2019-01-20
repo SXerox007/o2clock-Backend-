@@ -32,17 +32,16 @@ type P2PChat struct {
 	CaptureTime time.Time         `bson:"capture_time"`
 }
 
-// type AllChatsByUser struct {
-// 	ID          objectid.ObjectID `bson:"_id,omitempty"`
-// 	SenderId    string            `bson:"sender_id"`
-// 	ReciverId   string            `bson:"reciver_id"`
-// 	SenderName  string            `bson:"sender_name"`
-// 	ReciverName string            `bson:"reciver_name"`
-// 	ChatId      objectid.ObjectID `bson:"chat_id,omitempty"`
-// 	IsGroupChat bool              `bson:"is_group_chat"`
-// 	Version     string            `bson:"version"`
-// 	CaptureTime time.Time         `bson:"capture_time"`
-// }
+type SendAndReciveP2PChat struct {
+	ID            objectid.ObjectID `bson:"_id,omitempty"`
+	SenderId      string            `bson:"sender_id"`
+	ReciverId     string            `bson:"reciver_id"`
+	ChatId        objectid.ObjectID `bson:"chat_id,omitempty"`
+	Message       string            `bson:"message"`
+	IsMessageRead bool              `bson:"is_message_read"`
+	Version       string            `bson:"version"`
+	CaptureTime   time.Time         `bson:"capture_time"`
+}
 
 /**
 *
@@ -68,10 +67,6 @@ func GetUserInfo(req *chatpb.CommonRequest) (*chatpb.User, error) {
 *
 **/
 func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
-
-	//TODO: All current chats and groups chatid in another collection
-	//TODO: check wheater the senderid and reciverid is in same row or not
-
 	chatid, err := P2PReciverAndUserValidation(req)
 	if err == nil {
 		return chatid, err
@@ -101,6 +96,15 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 			fmt.Sprintln(errormsg.ERR_INTERNAL_OID, ok))
 	}
 	return id.String(), nil
+}
+
+/**
+*
+* Send the Person to Person msg (Single Message Send and Recive)
+*
+**/
+func SendP2PMsg(msg *chatpb.ChatMessage, stream chatpb.ChatRoom_ChatServer) {
+
 }
 
 /**

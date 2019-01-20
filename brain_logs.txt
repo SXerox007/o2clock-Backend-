@@ -337,3 +337,5 @@ ERROR: 2019/01/19 23:37:02 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt:
 INFO: 2019/01/19 23:43:42 brain.go:96: Exit the server with  interrupt
 INFO: 2019/01/19 23:45:08 brain.go:46: Start trace Important Error
 INFO: 2019/01/19 23:45:28 brain.go:96: Exit the server with  interrupt
+INFO: 2019/01/19 23:48:07 brain.go:46: Start trace Important Error
+INFO: 2019/01/20 15:55:51 brain.go:96: Exit the server with  interrupt
