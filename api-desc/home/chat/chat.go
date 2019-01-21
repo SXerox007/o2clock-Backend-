@@ -96,9 +96,8 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 	go ListenToClient(stream, outbox)
 	for {
 		select {
-		case outMsg := <-outbox:
-			//broadcast msg to all the group members
-
+		//case outMsg := <-outbox:
+		//broadcast msg to all the group members
 		case inMsg := <-clients["sd"].Ch:
 			//send msg to a single particular group
 
@@ -244,7 +243,6 @@ func AddClientToGroup(c string, g string) {
 
 // RemoveClientFromGroup will remove a client from a specific group. It will also
 // delete a group if the client is the last one leaving it.
-// It returns an error.
 func RemoveClientFromGroup(n string) error {
 
 	for _, g := range groups {
