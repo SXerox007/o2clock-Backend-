@@ -100,6 +100,31 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 
 /**
 *
+* Get all the P2P chats
+*
+**/
+func GetP2PAllChats() ([]P2PChat, error) {
+	res, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).Find(context.Background(), nil)
+	if err != nil {
+		return nil, status.Errorf(
+			codes.NotFound,
+			fmt.Sprintln(errormsg.ERR_NOT_FOUND, err))
+	}
+	var data []P2PChat
+	for res.Next(nil) {
+		item := P2PChat{}
+		if err := res.Decode(&item); err != nil {
+			return nil, status.Errorf(
+				codes.Aborted,
+				fmt.Sprintln(errormsg.ERR_MSG_DATA_CANT_DECODE, err))
+		}
+		data = append(data, item)
+	}
+	return data, nil
+}
+
+/**
+*
 *  P2P chat validation
 *
 **/

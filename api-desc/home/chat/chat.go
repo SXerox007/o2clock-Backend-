@@ -159,20 +159,20 @@ func ClientExists(n string) bool {
 }
 
 // AddGroup adds a new group to the server.
-func AddGroup(n string) {
+func AddGroup(groupName string) {
 
 	lock.Lock()
 	defer lock.Unlock()
 
 	g := &Group{
-		Name:      n,
+		Name:      groupName,
 		Ch:        make(chan chatpb.ChatMessage, 100),
 		WaitGroup: &sync.WaitGroup{},
 	}
 
 	log.Print("[AddGroup]: Added group ")
-	groups[n] = g
-	groups[n].WaitGroup.Add(1)
+	groups[groupName] = g
+	groups[groupName].WaitGroup.Add(1)
 }
 
 // GroupExists checks if a group exists on the server.

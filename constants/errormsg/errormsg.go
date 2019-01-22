@@ -23,4 +23,5 @@ const (
 	ERR_FACE_NOT_REC               = "Can't recognize the face"
 	ERR_NOT_A_SINGLE_FACE          = "Not a single face on the image"
 	ERR_NO_ROWS_Users              = "Can't get the Users"
+	ERR_NOT_FOUND                  = "No Data found"
 )
