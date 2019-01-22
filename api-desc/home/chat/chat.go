@@ -3,11 +3,13 @@ package chat
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"o2clock/api-proto/home/chat"
 	"o2clock/constants/appconstant"
+	"o2clock/constants/errormsg"
 	"sync"
 
 	mdb "o2clock/collection/chat"
@@ -16,6 +18,8 @@ import (
 	dbsettings "o2clock/settings/db"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type Server struct {
@@ -60,6 +64,7 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 		data, err = pdb.GetAllUsers(req)
 	}
 	RegisterAllClients(data)
+	RegisterP2PChats()
 	if err == nil {
 		//success
 		return &chatpb.UserList{
@@ -156,6 +161,35 @@ func ClientExists(n string) bool {
 	}
 
 	return false
+}
+
+/**
+*
+* Register all the P2P Chats
+*
+**/
+func RegisterP2PChats() error {
+	var i int
+	data, err := mdb.GetP2PAllChats()
+	if err != nil {
+		return status.Errorf(
+			codes.Internal,
+			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL, err))
+	}
+	lock.Lock()
+	defer lock.Unlock()
+	for i = 0; i < len(data); i++ {
+		g := &Group{
+			Name:      data[i].ID.String(),
+			Ch:        make(chan chatpb.ChatMessage, 100),
+			WaitGroup: &sync.WaitGroup{},
+		}
+
+		log.Print("[RegsiterP2PGroups]: P2P Groups Register ", data[i].ID.String())
+		groups[data[i].ID.String()] = g
+		groups[data[i].ID.String()].WaitGroup.Add(1)
+	}
+	return nil
 }
 
 // AddGroup adds a new group to the server.
