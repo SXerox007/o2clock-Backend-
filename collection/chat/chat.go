@@ -100,15 +100,6 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 
 /**
 *
-* Send the Person to Person msg (Single Message Send and Recive)
-*
-**/
-func SendP2PMsg(msg *chatpb.ChatMessage, stream chatpb.ChatRoom_ChatServer) {
-
-}
-
-/**
-*
 *  P2P chat validation
 *
 **/

@@ -59,6 +59,7 @@ func (*Server) GetUsersList(ctx context.Context, req *chatpb.CommonRequest) (*ch
 	if dbsettings.IsEnablePostgres() {
 		data, err = pdb.GetAllUsers(req)
 	}
+	RegisterAllClients(data)
 	if err == nil {
 		//success
 		return &chatpb.UserList{
@@ -92,15 +93,20 @@ func (*Server) GetUserDetails(ctx context.Context, req *chatpb.CommonRequest) (*
 
 // chat stream for both side bi-directional streaming
 func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
+	msg, err := stream.Recv()
+	if err != nil {
+		return err
+	}
 	outbox := make(chan chatpb.ChatMessage, 100)
 	go ListenToClient(stream, outbox)
 	for {
 		select {
-		//case outMsg := <-outbox:
+		case outMsg := <-outbox:
+			log.Println("Here at case 1:", outMsg)
 		//broadcast msg to all the group members
-		case inMsg := <-clients["sd"].Ch:
+		case inMsg := <-clients[msg.GetChatId()].Ch:
 			//send msg to a single particular group
-
+			log.Println("Here at case 2:", inMsg)
 			stream.Send(&inMsg)
 		}
 	}
@@ -121,20 +127,20 @@ func ListenToClient(stream chatpb.ChatRoom_ChatServer, messages chan<- chatpb.Ch
 	}
 }
 
-// AddClient adds a new client n to the server.
-func AddClient(n string) {
-
+// Register all the users for chats
+func RegisterAllClients(arr []*chatpb.User) {
 	lock.Lock()
 	defer lock.Unlock()
-
-	c := &Client{
-		Name:      n,
-		Ch:        make(chan chatpb.ChatMessage, 100),
-		WaitGroup: &sync.WaitGroup{},
+	var i int
+	for i = 0; i < len(arr); i++ {
+		c := &Client{
+			Name:      arr[i].GetUserName(),
+			Ch:        make(chan chatpb.ChatMessage, 100),
+			WaitGroup: &sync.WaitGroup{},
+		}
+		log.Print("[RegisterAllClient]: Registered client " + arr[i].GetUserName())
+		clients[arr[i].GetUserId()] = c
 	}
-
-	log.Print("[AddClient]: Registered client " + n)
-	clients[n] = c
 }
 
 // ClientExists checks if a client exists on the server.
