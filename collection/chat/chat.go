@@ -111,7 +111,7 @@ func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
 *
 **/
 func GetP2PAllChats() ([]P2PChat, error) {
-	res, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).Find(context.Background(), bson.D{{}})
+	res, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_P2P_CHATS).Find(context.Background(), nil)
 	if err != nil {
 		return nil, status.Errorf(
 			codes.NotFound,
@@ -174,8 +174,7 @@ func SaveChatMessage(msg *chatpb.ChatMessage) error {
 *
 **/
 func GetUserChatHistory(chatId string) ([]AllChats, error) {
-
-	res, err := mongodb.CreateCollection(chatId).Find(context.Background(), bson.D{{}})
+	res, err := mongodb.CreateCollection(chatId).Find(context.Background(), nil)
 	if err != nil {
 		return nil, status.Errorf(
 			codes.NotFound,

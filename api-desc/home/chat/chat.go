@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"o2clock/api-proto/home/chat"
 	"o2clock/constants/appconstant"
@@ -102,49 +101,41 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 	if err != nil {
 		return err
 	}
-	outbox := make(chan chatpb.ChatMessage, 100)
-	go ListenToClient(stream, outbox)
-	for {
-		select {
-		case outMsg := <-outbox:
-			log.Println("Here at case 1:", outMsg)
-		//broadcast msg to all the group members
-		case inMsg := <-clients[msg.GetChatId()].Ch:
-			//send msg to a single particular group
-			log.Println("Here at case 2:", inMsg)
-			stream.Send(&inMsg)
-		}
-	}
+	//outbox := make(chan chatpb.ChatMessage, 100)
+	//go ListenToClient(stream, outbox)
+	// log.Println("All Clients:", clients)
+	// log.Println("All Groups:", groups)
+	// for {
+	// 	select {
+	// 	case outMsg := <-outbox:
+	// 		fmt.Println("Here at case 1:", outMsg)
+	//broadcast msg to all the group members
+	Broadcast(msg.GetChatId(), *msg)
+	//	break
+	//case inMsg := <-clients[msg.GetSingleMessage().GetReciverId()].Ch:
+	//send msg to a single particular group
+	//	fmt.Println("Here at case 2:", inMsg)
+	//stream.Send(&inMsg)
+	//}
+	//	}
 	return nil
 }
 
 // ListenToClient listens on the incoming stream for any messages. It adds those messages to the channel.
 func ListenToClient(stream chatpb.ChatRoom_ChatServer, messages chan<- chatpb.ChatMessage) {
+	fmt.Println("Channel print:", messages)
+
 	for {
 		msg, err := stream.Recv()
 		if err == io.EOF {
-		}
-		if err != nil {
+			//	fmt.Println("End of file")
+		} else if err != nil {
+			//log.Error.Println("Error when listen to client:", err)
 		} else {
-			log.Printf("[ListenToClient] Client ", msg.GetMessage())
+			//fmt.Printf("[ListenToClient] Client ", msg.GetMessage())
+			mdb.SaveChatMessage(msg)
 			messages <- *msg
 		}
-	}
-}
-
-// Register all the users for chats
-func RegisterAllClients(arr []*chatpb.User) {
-	lock.Lock()
-	defer lock.Unlock()
-	var i int
-	for i = 0; i < len(arr); i++ {
-		c := &Client{
-			Name:      arr[i].GetUserName(),
-			Ch:        make(chan chatpb.ChatMessage, 100),
-			WaitGroup: &sync.WaitGroup{},
-		}
-		log.Print("[RegisterAllClient]: Registered client " + arr[i].GetUserName())
-		clients[arr[i].GetUserId()] = c
 	}
 }
 
@@ -161,6 +152,22 @@ func ClientExists(n string) bool {
 	}
 
 	return false
+}
+
+// Register all the users for chats
+func RegisterAllClients(arr []*chatpb.User) {
+	lock.Lock()
+	defer lock.Unlock()
+	var i int
+	for i = 0; i < len(arr); i++ {
+		c := &Client{
+			Name:      arr[i].GetUserName(),
+			Ch:        make(chan chatpb.ChatMessage, 100),
+			WaitGroup: &sync.WaitGroup{},
+		}
+		//fmt.Print("[RegisterAllClient]: Registered client " + arr[i].GetUserName())
+		clients[arr[i].GetUserId()] = c
+	}
 }
 
 /**
@@ -185,9 +192,12 @@ func RegisterP2PChats() error {
 			WaitGroup: &sync.WaitGroup{},
 		}
 
-		log.Print("[RegsiterP2PGroups]: P2P Groups Register ", data[i].ID.String())
+		//fmt.Print("[RegsiterP2PGroups]: P2P Groups Register ", data[i].ID.String())
 		groups[data[i].ID.String()] = g
 		groups[data[i].ID.String()].WaitGroup.Add(1)
+		//add sender and reciver to the groups
+		AddClientToGroup(data[i].ReciverId, data[i].ID.String())
+		AddClientToGroup(data[i].SenderId, data[i].ID.String())
 	}
 	return nil
 }
@@ -204,7 +214,7 @@ func AddGroup(groupName string) {
 		WaitGroup: &sync.WaitGroup{},
 	}
 
-	log.Print("[AddGroup]: Added group ")
+	//fmt.Print("[AddGroup]: Added group ")
 	groups[groupName] = g
 	groups[groupName].WaitGroup.Add(1)
 }
@@ -253,11 +263,11 @@ func RemoveClient(name string) error {
 
 	if ClientExists(name) {
 		delete(clients, name)
-		log.Print("[RemoveClient]: Removed client " + name)
+		//fmt.Print("[RemoveClient]: Removed client " + name)
 		if InGroup(name) {
 			RemoveClientFromGroup(name)
 		} else {
-			log.Print("[RemoveClient]: " + name + " was not in any groups.")
+			//fmt.Print("[RemoveClient]: " + name + " was not in any groups.")
 			return nil
 		}
 	}
@@ -278,7 +288,7 @@ func AddClientToGroup(c string, g string) {
 	groups[g].Clients = append(groups[g].Clients, c)
 	clients[c].Groups = append(clients[c].Groups, g)
 
-	log.Println("[AddClientToGroup] Added " + c + " to " + g)
+	//fmt.Println("[AddClientToGroup] Added " + c + " to " + g)
 }
 
 // RemoveClientFromGroup will remove a client from a specific group. It will also
@@ -311,6 +321,33 @@ func RemoveClientFromGroup(n string) error {
 	}
 
 	return errors.New("no user found in the group list. Something went wrong")
+}
+
+// Broadcast takes any messages that need to be sent and sorts them by group. It then
+// adds the message to the channel of each member of that group.
+// It doesn't return anything.
+func Broadcast(gName string, msg chatpb.ChatMessage) {
+
+	lock.Lock()
+	defer lock.Unlock()
+
+	for gn := range groups {
+		fmt.Printf("[Broadcast]: I found " + gn + ".")
+		if gn == gName {
+			fmt.Printf("[Broadcast]: Client " + msg.SenderName + " sent " + msg.GetSingleMessage().GetReciverName() + " a message: " + msg.GetMessage())
+			for _, c := range groups[gn].Clients {
+				fmt.Printf("[Broadcast]: I found " + c + " in gName")
+				// if c == msg.Sender && msg.Message == msg.Sender+" left chat!\n" {
+				// 	log.Printf("[Broadcast]: ADDING THE KILL MESSAGE TO " + c)
+				// 	clients[c].ch <- msg
+				// } else
+				if c != msg.GetSenderid() {
+					fmt.Printf("[Broadcast] Adding the message to " + c + "'s channel.")
+					clients[c].Ch <- msg
+				}
+			}
+		}
+	}
 }
 
 // single chat p2p
@@ -384,6 +421,7 @@ func (*Server) KickoutUserFromGroup(ctx context.Context, req *chatpb.KickMember)
 
 // Get the chat history
 func (*Server) GetChatHistory(ctx context.Context, req *chatpb.ReadHistoryRequest) (*chatpb.ReadHistoryResponse, error) {
+
 	return nil, nil
 }
 
