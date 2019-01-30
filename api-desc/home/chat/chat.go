@@ -9,6 +9,7 @@ import (
 	"o2clock/api-proto/home/chat"
 	"o2clock/constants/appconstant"
 	"o2clock/constants/errormsg"
+	"o2clock/utils/log"
 	"sync"
 
 	mdb "o2clock/collection/chat"
@@ -101,23 +102,28 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 	if err != nil {
 		return err
 	}
-	//outbox := make(chan chatpb.ChatMessage, 100)
-	//go ListenToClient(stream, outbox)
+	var testMsg *chatpb.ChatMessage
+	testMsg = msg
+	testMsg.Senderid = msg.GetSingleMessage().GetReciverId()
+	testMsg.GetSingleMessage().ReciverId = msg.GetSenderid()
+	stream.Send(testMsg)
+	// outbox := make(chan chatpb.ChatMessage, 100)
+	// go ListenToClient(stream, outbox)
 	// log.Println("All Clients:", clients)
 	// log.Println("All Groups:", groups)
 	// for {
 	// 	select {
 	// 	case outMsg := <-outbox:
 	// 		fmt.Println("Here at case 1:", outMsg)
-	//broadcast msg to all the group members
-	Broadcast(msg.GetChatId(), *msg)
-	//	break
-	//case inMsg := <-clients[msg.GetSingleMessage().GetReciverId()].Ch:
-	//send msg to a single particular group
-	//	fmt.Println("Here at case 2:", inMsg)
-	//stream.Send(&inMsg)
-	//}
-	//	}
+	// 		//broadcast msg to all the group members
+	// 		Broadcast(msg.GetChatId(), *msg)
+	// 		break
+	// 	case inMsg := <-clients[msg.GetSingleMessage().GetReciverId()].Ch:
+	// 		//send msg to a single particular group
+	// 		fmt.Println("Here at case 2:", inMsg)
+	// 		stream.Send(&inMsg)
+	// 	}
+	// }
 	return nil
 }
 
@@ -128,11 +134,11 @@ func ListenToClient(stream chatpb.ChatRoom_ChatServer, messages chan<- chatpb.Ch
 	for {
 		msg, err := stream.Recv()
 		if err == io.EOF {
-			//	fmt.Println("End of file")
+			fmt.Println("End of file")
 		} else if err != nil {
-			//log.Error.Println("Error when listen to client:", err)
+			log.Error.Println("Error when listen to client:", err)
 		} else {
-			//fmt.Printf("[ListenToClient] Client ", msg.GetMessage())
+			fmt.Printf("[ListenToClient] Client ", msg.GetMessage())
 			mdb.SaveChatMessage(msg)
 			messages <- *msg
 		}
