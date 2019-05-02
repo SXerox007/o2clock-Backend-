@@ -33,7 +33,7 @@ func VerifyUser(image []byte, accessToken string) error {
 		totalF = append(totalF, int32(i))
 	}
 
-	//testData := filepath.Join(DATA_DIR, "sumit.jpg")
+	//testData := filepath.Join(DATA_DIR, "eminem.jpg")
 	testf, err := rec.RecognizeSingle(image)
 	if err != nil {
 		log.Fatalln(err)
@@ -41,11 +41,11 @@ func VerifyUser(image []byte, accessToken string) error {
 
 	id := cFace.CompareFaces(samples, testf.Descriptor, 0.6)
 	if id < 0 {
-		log.Fatalln("didn't find known face")
+		log.Println("didn't find known face")
+		return nil
 	}
 
-	log.Println("id", totalF[id])
+	log.Println("id", id)
 	log.Println("Image reorganised")
 	return nil
-
 }
