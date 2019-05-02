@@ -30,7 +30,6 @@ func VerifyUser(image []byte, accessToken string) error {
 	var totalF []int32
 	for i, f := range faces {
 		samples = append(samples, f.Descriptor)
-		// Each face is unique on that image so goes to its own category.
 		totalF = append(totalF, int32(i))
 	}
 
