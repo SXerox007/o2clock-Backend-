@@ -1,16 +1,10 @@
 package home
 
 import (
-	"fmt"
 	"log"
 	face "o2clock/algorithm-face"
-	"o2clock/constants/errormsg"
+	cFace "o2clock/utils/cface"
 	"path/filepath"
-
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-
-	faceComp "o2clock/utils/cface"
 )
 
 const (
@@ -21,15 +15,15 @@ const (
 func VerifyUser(image []byte, accessToken string) error {
 	rec, err := face.NewRecognizer(DATA_DIR)
 	if err != nil {
-		return err
+		log.Fatalln(err)
 	}
 	defer rec.Close()
-	//TODO ---> Get the image url from db
-	dataImage := filepath.Join(DATA_DIR, "sumit.jpg")
+
+	dataImage := filepath.Join(DATA_DIR, "mix.jpg")
 
 	faces, err := rec.RecognizeFile(dataImage)
 	if err != nil {
-		return err
+		log.Fatalln(err)
 	}
 
 	var samples []face.Descriptor
@@ -40,35 +34,19 @@ func VerifyUser(image []byte, accessToken string) error {
 		totalF = append(totalF, int32(i))
 	}
 
-	// Pass samples to the recognizer.
-	rec.SetSamples(samples, totalF)
-
-	// Now let's try to classify some not yet known image.
-
-	// testSumit := filepath.Join(DATA_DIR, "sumit.jpg")
-	sumit, err := rec.RecognizeSingle(image)
+	//testData := filepath.Join(DATA_DIR, "sumit.jpg")
+	testf, err := rec.RecognizeSingle(image)
 	if err != nil {
-		log.Println("Face not recorganise not the same person")
-		return status.Errorf(
-			codes.Internal,
-			fmt.Sprintln(errormsg.ERR_FACE_NOT_REC))
-	}
-	if sumit == nil {
-		log.Println("Not a sigle image")
-		return status.Errorf(
-			codes.Internal,
-			fmt.Sprintln(errormsg.ERR_NOT_A_SINGLE_FACE))
-	}
-	//id := rec.ClassifyThreshold(sumit.Descriptor, 0.8)
-	id := faceComp.CompareFaces(samples, sumit.Descriptor, 0.8)
-	if id < 0 {
-		log.Println("Can't classify")
-		return status.Errorf(
-			codes.Internal,
-			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL_SERVER))
+		log.Fatalln(err)
 	}
 
-	log.Println("id", id)
-	log.Println("Image recorganise")
+	id := cFace.CompareFaces(samples, testf.Descriptor, 0.6)
+	if id < 0 {
+		log.Fatalln("didn't find known face")
+	}
+
+	log.Println("id", totalF[id])
+	log.Println("Image reorganised")
 	return nil
+
 }
