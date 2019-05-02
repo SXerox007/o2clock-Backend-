@@ -9,6 +9,8 @@ import (
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	faceComp "o2clock/utils/cface"
 )
 
 const (
@@ -23,7 +25,7 @@ func VerifyUser(image []byte, accessToken string) error {
 	}
 	defer rec.Close()
 	//TODO ---> Get the image url from db
-	dataImage := filepath.Join(DATA_DIR, "mix.jpg")
+	dataImage := filepath.Join(DATA_DIR, "sumit.jpg")
 
 	faces, err := rec.RecognizeFile(dataImage)
 	if err != nil {
@@ -43,8 +45,8 @@ func VerifyUser(image []byte, accessToken string) error {
 
 	// Now let's try to classify some not yet known image.
 
-	testSumit := filepath.Join(DATA_DIR, "sumit.jpg")
-	sumit, err := rec.RecognizeSingleFile(testSumit)
+	// testSumit := filepath.Join(DATA_DIR, "sumit.jpg")
+	sumit, err := rec.RecognizeSingle(image)
 	if err != nil {
 		log.Println("Face not recorganise not the same person")
 		return status.Errorf(
@@ -57,13 +59,15 @@ func VerifyUser(image []byte, accessToken string) error {
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_NOT_A_SINGLE_FACE))
 	}
-	id := rec.ClassifyThreshold(sumit.Descriptor, 0.6)
+	//id := rec.ClassifyThreshold(sumit.Descriptor, 0.8)
+	id := faceComp.CompareFaces(samples, sumit.Descriptor, 0.8)
 	if id < 0 {
 		log.Println("Can't classify")
 		return status.Errorf(
 			codes.Internal,
 			fmt.Sprintln(errormsg.ERR_MSG_INTERNAL_SERVER))
 	}
+
 	log.Println("id", id)
 	log.Println("Image recorganise")
 	return nil

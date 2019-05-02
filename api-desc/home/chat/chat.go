@@ -427,7 +427,6 @@ func (*Server) KickoutUserFromGroup(ctx context.Context, req *chatpb.KickMember)
 
 // Get the chat history
 func (*Server) GetChatHistory(ctx context.Context, req *chatpb.ReadHistoryRequest) (*chatpb.ReadHistoryResponse, error) {
-
 	return nil, nil
 }
 
