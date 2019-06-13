@@ -23,6 +23,5 @@ source secure-keys/keys
 # secure key
 openssl genrsa -out secure-keys/o2clock.rsa
 
-
 # mongodb clear collection
 db.all_single_chats.remove({})

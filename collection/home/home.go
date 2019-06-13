@@ -19,8 +19,7 @@ func VerifyUser(image []byte, accessToken string) error {
 	}
 	defer rec.Close()
 
-	dataImage := filepath.Join(DATA_DIR, "mix.jpg")
-
+	dataImage := filepath.Join(DATA_DIR, "sumit.jpg")
 	faces, err := rec.RecognizeFile(dataImage)
 	if err != nil {
 		log.Fatalln(err)
@@ -33,7 +32,7 @@ func VerifyUser(image []byte, accessToken string) error {
 		totalF = append(totalF, int32(i))
 	}
 
-	//testData := filepath.Join(DATA_DIR, "eminem.jpg")
+	//testData := filepath.Join(DATA_DIR, "sample.jpg")
 	testf, err := rec.RecognizeSingle(image)
 	if err != nil {
 		log.Fatalln(err)

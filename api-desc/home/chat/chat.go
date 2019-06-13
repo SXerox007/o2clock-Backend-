@@ -5,11 +5,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"o2clock/api-proto/home/chat"
 	"o2clock/constants/appconstant"
 	"o2clock/constants/errormsg"
-	"o2clock/utils/log"
+
+	logger "o2clock/utils/log"
 	"sync"
 
 	mdb "o2clock/collection/chat"
@@ -102,11 +104,22 @@ func (*Server) Chat(stream chatpb.ChatRoom_ChatServer) error {
 	if err != nil {
 		return err
 	}
-	var testMsg *chatpb.ChatMessage
-	testMsg = msg
-	testMsg.Senderid = msg.GetSingleMessage().GetReciverId()
-	testMsg.GetSingleMessage().ReciverId = msg.GetSenderid()
-	stream.Send(testMsg)
+
+	// testing ------->
+	// var testMsg *chatpb.ChatMessage
+	// testMsg = msg
+	// testMsg.Senderid = msg.GetSingleMessage().GetReciverId()
+	// testMsg.GetSingleMessage().ReciverId = msg.GetSenderid()
+	// stream.Send(testMsg)
+
+	log.Println("Message Recived from:", msg.ChatId)
+	clients[msg.ChatId] = &Client{
+		Name: msg.ChatId,
+		Ch:   make(chan chatpb.ChatMessage, 100),
+	}
+
+	log.Println("All Client print:", clients)
+
 	// outbox := make(chan chatpb.ChatMessage, 100)
 	// go ListenToClient(stream, outbox)
 	// log.Println("All Clients:", clients)
@@ -136,7 +149,7 @@ func ListenToClient(stream chatpb.ChatRoom_ChatServer, messages chan<- chatpb.Ch
 		if err == io.EOF {
 			fmt.Println("End of file")
 		} else if err != nil {
-			log.Error.Println("Error when listen to client:", err)
+			logger.Error.Println("Error when listen to client:", err)
 		} else {
 			fmt.Printf("[ListenToClient] Client ", msg.GetMessage())
 			mdb.SaveChatMessage(msg)
