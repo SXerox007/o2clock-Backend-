@@ -24,4 +24,5 @@ const (
 	ERR_NOT_A_SINGLE_FACE          = "Not a single face on the image"
 	ERR_NO_ROWS_Users              = "Can't get the Users"
 	ERR_NOT_FOUND                  = "No Data found"
+	ERR_STATUS                     = "Some error in update status"
 )

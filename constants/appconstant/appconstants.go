@@ -14,3 +14,10 @@ const (
 	MSG_FAILURE             = "Error"
 	MSG_SOMETING_WENT_WRONG = "Something Went Wrong"
 )
+
+// status set for chat
+const (
+	ONLINE  = 1
+	OFFLINE = 2
+	EXIT    = 3
+)
