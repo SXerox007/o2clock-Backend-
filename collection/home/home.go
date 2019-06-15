@@ -19,7 +19,7 @@ func VerifyUser(image []byte, accessToken string) error {
 	}
 	defer rec.Close()
 
-	dataImage := filepath.Join(DATA_DIR, "sumit.jpg")
+	dataImage := filepath.Join(DATA_DIR, "mix.jpg")
 	faces, err := rec.RecognizeFile(dataImage)
 	if err != nil {
 		log.Fatalln(err)

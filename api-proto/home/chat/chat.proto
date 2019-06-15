@@ -123,7 +123,22 @@ message AllChats{
     CommonResponse common_response = 3;
 }
 
+message StatusChangeRequest {
+    int32 status = 1;
+    string person_id = 2; 
+}
+
+
 service ChatRoom {
+    
+    // set status for chat
+    rpc StatusChange(StatusChangeRequest) returns (CommonResponse){
+        option (google.api.http) = {
+            post: "/v1/chat/change/status"
+            body:"*"
+		};
+    }
+
     // chat stream for both side bi-directional streaming
     rpc Chat(stream ChatMessage) returns (stream ChatMessage){
     };

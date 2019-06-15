@@ -448,3 +448,8 @@ func (Server) LeaveGroup(ctx context.Context, req *chatpb.LeaveGroupRequest) (*c
 	return nil, nil
 
 }
+
+// change status
+func (Server) StatusChange(ctx context.Context, req *chatpb.StatusChangeRequest) (*chatpb.CommonResponse, error) {
+	return nil, nil
+}
