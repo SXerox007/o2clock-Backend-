@@ -74,10 +74,12 @@ func GetUserInfo(req *chatpb.CommonRequest) (*chatpb.User, error) {
 *
 **/
 func StartP2PChat(req *chatpb.P2PChatRequest) (string, error) {
+	log.Println("Here at p2p start chat")
 	chatid, err := P2PReciverAndUserValidation(req)
 	if err == nil {
 		return chatid, err
 	}
+	log.Println("Here at validation check validate")
 
 	log.Println("Error", err)
 

@@ -101,3 +101,26 @@ INFO: 2019/06/15 23:22:30 brain.go:46: Start trace Important Error
 INFO: 2019/06/15 23:43:34 brain.go:96: Exit the server with  interrupt
 INFO: 2019/06/15 23:52:17 brain.go:46: Start trace Important Error
 INFO: 2019/06/15 23:52:22 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/16 00:14:18 brain.go:46: Start trace Important Error
+INFO: 2019/06/16 00:49:56 brain.go:46: Start trace Important Error
+INFO: 2019/06/16 00:55:09 brain.go:46: Start trace Important Error
+INFO: 2019/06/16 00:55:35 brain.go:46: Start trace Important Error
+INFO: 2019/06/17 10:24:23 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/17 23:45:24 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:11:15 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:13:57 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:14:38 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:14:41 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:18:38 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:18:42 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:21:28 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:21:38 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:23:51 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:23:55 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:28:31 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:28:35 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:30:13 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:30:17 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:40:58 brain.go:96: Exit the server with  interrupt
+INFO: 2019/06/18 00:41:05 brain.go:46: Start trace Important Error
+INFO: 2019/06/18 00:44:07 brain.go:96: Exit the server with  interrupt
