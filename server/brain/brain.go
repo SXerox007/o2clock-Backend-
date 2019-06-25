@@ -11,6 +11,7 @@ import (
 	"o2clock/api-desc/onboarding/accesstoken"
 	"o2clock/api-desc/onboarding/login"
 	"o2clock/api-desc/onboarding/register"
+	"o2clock/api-desc/webhooks/git"
 	"o2clock/base/server"
 	"o2clock/constants/appconstant"
 	"o2clock/constants/errormsg"
@@ -110,5 +111,7 @@ func rpcServices(srv *grpc.Server) {
 	home.RegisterVerifyUserService(srv)
 	//chat room
 	chat.RegisterChatRoomService(srv)
+	// webhook github
+	git.RegisterGithubService(srv)
 
 }

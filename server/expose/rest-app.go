@@ -11,6 +11,7 @@ import (
 	"o2clock/api-proto/onboarding/accesstoken"
 	"o2clock/api-proto/onboarding/login"
 	"o2clock/api-proto/onboarding/register"
+	"o2clock/api-proto/webhooks/git"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
@@ -34,6 +35,7 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	err = loginpb.RegisterLoginServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = homepb.RegisterVerifyServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = chatpb.RegisterChatRoomHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
+	err = githubpb.RegisterGithubWebhookServicesHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	if err != nil {
 		return err
 	}
