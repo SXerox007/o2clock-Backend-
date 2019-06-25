@@ -1,0 +1,36 @@
+syntax = "proto3";
+package githubpb;
+
+import "google/api/annotations.proto";
+
+message GithubPushWebhookRequest {
+    string ref = 1;
+    string head = 2;
+    string before = 3;
+    int32 size = 4;
+    int32 distinct_size = 5; 
+    repeated GithubCommits commits = 6;
+}
+
+message GithubCommits {
+    string sha = 1;
+    string path = 2;
+    string author = 3;
+    string since = 4;
+    string until = 5;
+}
+
+message CommonResponse{
+    string message  = 1;
+    int32 code = 2;
+}
+
+
+service GithubWebhookServices {
+    rpc FetchGithubPushCommitInfo (GithubPushWebhookRequest) returns (CommonResponse){
+        option (google.api.http) = {
+            post: "/v1/github/push"
+            body:"*"
+		};
+    }
+}
