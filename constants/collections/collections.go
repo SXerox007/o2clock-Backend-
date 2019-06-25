@@ -6,6 +6,7 @@ const (
 	COLLECTIONS_ACCESS_TOKEN     = "all_tokens"
 	COLLECTIONS_ALL_P2P_CHATS    = "all_single_chats"
 	COLLECTIONS_ALL_USERS_STATUS = "all_users_status"
+	COLLECTIONS_ALL_GITHUB       = "all_github_track"
 )
 
 //db params

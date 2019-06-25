@@ -13,11 +13,12 @@ message GithubPushWebhookRequest {
 }
 
 message GithubCommits {
-    string sha = 1;
-    string path = 2;
-    string author = 3;
-    string since = 4;
-    string until = 5;
+    string id = 1;
+    string tree_id = 2;
+    bool distinct = 3;
+    string message = 4;
+    string timestamp =5;
+    string url = 6;
 }
 
 message CommonResponse{
