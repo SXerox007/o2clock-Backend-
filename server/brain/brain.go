@@ -18,6 +18,7 @@ import (
 	"o2clock/db/mongodb"
 	db "o2clock/db/postgres"
 	dbsettings "o2clock/settings/db"
+	"o2clock/utils"
 	"o2clock/utils/log"
 	"os"
 	"os/signal"
@@ -80,7 +81,7 @@ func ServerSetup() {
 	reflection.Register(srv)
 	//Register All the Services
 	rpcServices(srv)
-
+	go utils.CreateJobMemUsage()
 	go func() {
 		fmt.Println(appconstant.LOG_SERVER_START)
 		if err := srv.Serve(listner); err != nil {

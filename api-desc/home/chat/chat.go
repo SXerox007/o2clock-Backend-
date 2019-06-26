@@ -301,11 +301,11 @@ func AddClientToGroup(c string, g string) {
 	//lock.Lock()
 	//defer lock.Unlock()
 
-	groups[g].WaitGroup.Add(1)
-	defer groups[g].WaitGroup.Done()
+	// groups[g].WaitGroup.Add(1)
+	// defer groups[g].WaitGroup.Done()
 
-	groups[g].Clients = append(groups[g].Clients, c)
-	clients[c].Groups = append(clients[c].Groups, g)
+	// groups[g].Clients = append(groups[g].Clients, c)
+	// clients[c].Groups = append(clients[c].Groups, g)
 
 	//fmt.Println("[AddClientToGroup] Added " + c + " to " + g)
 }
