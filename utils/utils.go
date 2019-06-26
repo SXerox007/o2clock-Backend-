@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"runtime"
 	"time"
+
+	"google.golang.org/grpc"
 )
 
-func PrintMemUsage() {
+func ValidateAndPrintMemUsage(srv *grpc.Server) {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	fmt.Println(time.Now())
@@ -16,6 +18,7 @@ func PrintMemUsage() {
 	fmt.Println("NumGC = ", m.NumGC)
 	fmt.Println("Lookups = ", bToMb(m.Lookups))
 	fmt.Println("Mallocs = ", bToMb(m.Mallocs))
+	fmt.Println()
 }
 
 func bToMb(b uint64) uint64 {
@@ -23,11 +26,11 @@ func bToMb(b uint64) uint64 {
 }
 
 // Job memory usage
-func CreateJobMemUsage() {
+func CreateJobMemUsage(srv *grpc.Server) {
 	jt := NewJobMemUsage()
 	for {
 		<-jt.t.C
-		PrintMemUsage()
+		ValidateAndPrintMemUsage(srv)
 		jt.updateJobMemCheck()
 	}
 }

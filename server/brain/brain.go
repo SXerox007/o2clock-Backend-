@@ -81,7 +81,7 @@ func ServerSetup() {
 	reflection.Register(srv)
 	//Register All the Services
 	rpcServices(srv)
-	go utils.CreateJobMemUsage()
+	go utils.CreateJobMemUsage(srv)
 	go func() {
 		fmt.Println(appconstant.LOG_SERVER_START)
 		if err := srv.Serve(listner); err != nil {

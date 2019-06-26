@@ -2,8 +2,6 @@ package utils
 
 import "time"
 
-const JOB_MEM_INTERVAL_PERIOD time.Duration = 1 * time.Hour
-
 type CheckMemUtilizerJob struct {
 	t *time.Timer
 }
