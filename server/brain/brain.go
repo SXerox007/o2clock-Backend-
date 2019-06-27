@@ -20,6 +20,7 @@ import (
 	dbsettings "o2clock/settings/db"
 	"o2clock/utils"
 	"o2clock/utils/log"
+	"o2clock/utils/slack"
 	"os"
 	"os/signal"
 
@@ -81,6 +82,9 @@ func ServerSetup() {
 	reflection.Register(srv)
 	//Register All the Services
 	rpcServices(srv)
+	// slack bot activate
+	go slack.SlackbotReciveMsgSetup()
+	// job to check mem usage
 	go utils.CreateJobMemUsage(srv)
 	go func() {
 		fmt.Println(appconstant.LOG_SERVER_START)

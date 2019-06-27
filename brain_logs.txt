@@ -172,3 +172,36 @@ INFO: 2019/06/26 16:55:25 brain.go:99: Exit the server with  interrupt
 INFO: 2019/06/26 16:55:32 brain.go:48: Start trace Important Error
 INFO: 2019/06/26 17:05:14 brain.go:98: Exit the server with  interrupt
 INFO: 2019/06/26 17:05:22 brain.go:48: Start trace Important Error
+INFO: 2019/06/26 18:42:38 brain.go:98: Exit the server with  interrupt
+INFO: 2019/06/27 15:50:04 brain.go:48: Start trace Important Error
+INFO: 2019/06/27 15:53:52 brain.go:98: Exit the server with  interrupt
+INFO: 2019/06/27 15:53:57 brain.go:48: Start trace Important Error
+INFO: 2019/06/27 16:03:08 brain.go:98: Exit the server with  interrupt
+INFO: 2019/06/27 16:03:14 brain.go:48: Start trace Important Error
+INFO: 2019/06/27 16:06:09 brain.go:98: Exit the server with  interrupt
+INFO: 2019/06/27 16:49:54 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 16:51:03 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 16:51:43 slack.go:46: Error Slack:  no_text
+ERROR: 2019/06/27 16:51:43 slack.go:32: Error Slack:  no_text
+INFO: 2019/06/27 17:06:32 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 17:06:45 slack.go:47: Error Slack:  no_text
+ERROR: 2019/06/27 17:06:45 slack.go:33: Error Slack:  no_text
+INFO: 2019/06/27 17:07:38 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:15:37 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:23:17 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 17:23:28 slack.go:47: Error Slack:  no_text
+ERROR: 2019/06/27 17:23:28 slack.go:33: Error Slack:  no_text
+INFO: 2019/06/27 17:23:46 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 17:23:58 slack.go:47: Error Slack:  no_text
+ERROR: 2019/06/27 17:23:58 slack.go:33: Error Slack:  no_text
+INFO: 2019/06/27 17:25:41 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:29:19 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:29:37 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:39:34 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 17:39:40 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:41:34 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 17:41:40 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:42:06 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 17:43:06 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 17:43:26 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 17:43:35 brain.go:49: Start trace Important Error

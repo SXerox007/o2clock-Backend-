@@ -25,4 +25,5 @@ const (
 	ERR_NO_ROWS_Users              = "Can't get the Users"
 	ERR_NOT_FOUND                  = "No Data found"
 	ERR_STATUS                     = "Some error in update status"
+	ERR_SLACK                      = "Error Slack: "
 )

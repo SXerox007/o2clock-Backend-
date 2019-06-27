@@ -13,7 +13,7 @@ func NewJobMemUsage() CheckMemUtilizerJob {
 
 // check next check mem
 func getNextCheckMem() time.Duration {
-	next := time.Now().Local().Add(1 * time.Minute)
+	next := time.Now().Local().Add(10 * time.Minute)
 	return next.Sub(time.Now())
 }
 

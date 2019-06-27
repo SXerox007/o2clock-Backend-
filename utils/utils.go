@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"o2clock/constants/appconstant"
 	"runtime"
 	"time"
 
@@ -12,12 +13,12 @@ func ValidateAndPrintMemUsage(srv *grpc.Server) {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 	fmt.Println(time.Now())
-	fmt.Println("Alloc = ", bToMb(m.Alloc))
-	fmt.Println("TotalAlloc = ", bToMb(m.TotalAlloc))
-	fmt.Println("Sys =  ", bToMb(m.Sys))
-	fmt.Println("NumGC = ", m.NumGC)
-	fmt.Println("Lookups = ", bToMb(m.Lookups))
-	fmt.Println("Mallocs = ", bToMb(m.Mallocs))
+	fmt.Println(appconstant.MEM_ALLOC, bToMb(m.Alloc))
+	fmt.Println(appconstant.MEM_TOTAL_ALLOC, bToMb(m.TotalAlloc))
+	fmt.Println(appconstant.MEM_SYS, bToMb(m.Sys))
+	fmt.Println(appconstant.NUM_GC, m.NumGC)
+	fmt.Println(appconstant.LOOKUPS, bToMb(m.Lookups))
+	fmt.Println(appconstant.MALLOCS, bToMb(m.Mallocs))
 	fmt.Println()
 }
 
@@ -33,4 +34,13 @@ func CreateJobMemUsage(srv *grpc.Server) {
 		ValidateAndPrintMemUsage(srv)
 		jt.updateJobMemCheck()
 	}
+}
+
+// current srv status
+func CurrentMemStatus() string {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	return appconstant.MEM_ALLOC + fmt.Sprint(bToMb(m.Alloc)) +
+		"\n" + appconstant.MEM_TOTAL_ALLOC + fmt.Sprint(bToMb(m.TotalAlloc)) +
+		"\n" + appconstant.MEM_SYS + fmt.Sprint(bToMb(m.Sys))
 }
