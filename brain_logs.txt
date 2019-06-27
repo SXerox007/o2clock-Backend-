@@ -205,3 +205,11 @@ INFO: 2019/06/27 17:42:06 brain.go:102: Exit the server with  interrupt
 INFO: 2019/06/27 17:43:06 brain.go:49: Start trace Important Error
 INFO: 2019/06/27 17:43:26 brain.go:102: Exit the server with  interrupt
 INFO: 2019/06/27 17:43:35 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 21:02:26 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 21:02:26 brain.go:76: Error in server listen:  listen tcp :50051: bind: address already in use
+INFO: 2019/06/27 21:02:36 brain.go:49: Start trace Important Error
+ERROR: 2019/06/27 21:02:36 brain.go:76: Error in server listen:  listen tcp :50051: bind: address already in use
+INFO: 2019/06/27 21:02:51 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 21:02:58 brain.go:49: Start trace Important Error
+INFO: 2019/06/27 21:03:55 brain.go:102: Exit the server with  interrupt
+INFO: 2019/06/27 21:10:56 brain.go:49: Start trace Important Error
