@@ -9,6 +9,7 @@ import (
 	"o2clock/api-desc/home/chat"
 	"o2clock/api-desc/home/logout"
 	"o2clock/api-desc/onboarding/accesstoken"
+	"o2clock/api-desc/onboarding/forgotpassword"
 	"o2clock/api-desc/onboarding/login"
 	"o2clock/api-desc/onboarding/register"
 	"o2clock/api-desc/webhooks/git"
@@ -118,5 +119,7 @@ func rpcServices(srv *grpc.Server) {
 	chat.RegisterChatRoomService(srv)
 	// webhook github
 	git.RegisterGithubService(srv)
+	// forgot password
+	forgotpassword.RegisterForgotPasswordService(srv)
 
 }

@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"crypto/rand"
 	"fmt"
+	"io"
 	"o2clock/constants/appconstant"
 	"runtime"
 	"time"
@@ -44,3 +46,43 @@ func CurrentMemStatus() string {
 		"\n" + appconstant.MEM_TOTAL_ALLOC + fmt.Sprint(bToMb(m.TotalAlloc)) +
 		"\n" + appconstant.MEM_SYS + fmt.Sprint(bToMb(m.Sys))
 }
+
+// generate random string
+func GenerateRandomString(max int) string {
+	var table = [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
+	b := make([]byte, max)
+	n, err := io.ReadAtLeast(rand.Reader, b, max)
+	if n != max {
+		panic(err)
+	}
+	for i := 0; i < len(b); i++ {
+		b[i] = table[int(b[i])%len(table)]
+	}
+	return string(b)
+}
+
+// generate random string with type
+func RandomStringGenerateWithType(size int, randType string) string {
+	var dictionary string
+	switch randType {
+	case appconstant.ALPHA_NUM:
+		dictionary = appconstant.DIC_ALPHA_NUM
+		break
+	case appconstant.ALPHA:
+		dictionary = appconstant.DIC_ALPHA
+		break
+	case appconstant.NUM:
+		dictionary = appconstant.DIC_NUM
+		break
+	default:
+		return ""
+	}
+	var bytes = make([]byte, size)
+	rand.Read(bytes)
+	for k, v := range bytes {
+		bytes[k] = dictionary[v%byte(len(dictionary))]
+	}
+	return string(bytes)
+}
+
+//

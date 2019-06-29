@@ -26,4 +26,5 @@ const (
 	ERR_NOT_FOUND                  = "No Data found"
 	ERR_STATUS                     = "Some error in update status"
 	ERR_SLACK                      = "Error Slack: "
+	ERR_MSG_EMAIL_NOT_FOUND        = "The Email you enter that does'nt belong to our customer."
 )

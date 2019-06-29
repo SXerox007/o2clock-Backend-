@@ -168,3 +168,15 @@ func validationCheck(req *regsiterpb.RegisterUserRequest) error {
 	}
 	return nil
 }
+
+// validate user email
+func ValidateUserEmail(email string) error {
+	filter := bson.M{collections.PARAM_EMAIL: email}
+	err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter).Decode(&Users{})
+	if err != nil {
+		return status.Errorf(
+			codes.Aborted,
+			fmt.Sprintln(errormsg.ERR_MSG_EMAIL_NOT_FOUND))
+	}
+	return nil
+}

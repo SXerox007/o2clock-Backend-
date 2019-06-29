@@ -2,6 +2,7 @@ package slack
 
 import (
 	"fmt"
+	"o2clock/constants/appconstant"
 	"o2clock/constants/errormsg"
 	"o2clock/core/slackclient"
 	"o2clock/utils"
@@ -39,7 +40,7 @@ func SendRequestInfomation(ev *slack.MessageEvent) error {
 	var msg string
 	var isRequest = true
 	switch ev.Text {
-	case "srv -h":
+	case appconstant.SRVINFO:
 		msg = utils.CurrentMemStatus()
 		break
 	default:

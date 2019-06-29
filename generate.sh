@@ -17,6 +17,9 @@ curl -i -H "Accept: application/json" -H "Content-Type: application/json" -v -F 
 # Curl Get all the users
 curl -X GET http://localhost:5051/v1/chat/userslist
 
+# Curl forgot password
+curl -i -H "Content-Type: application/json" -X GET 'http://localhost:5051/v1/user/password/forgot?email=sumit@bonfleet.com'
+
 # source keys
 source secure-keys/keys
 
