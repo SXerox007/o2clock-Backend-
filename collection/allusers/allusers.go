@@ -170,13 +170,14 @@ func validationCheck(req *regsiterpb.RegisterUserRequest) error {
 }
 
 // validate user email
-func ValidateUserEmail(email string) error {
+func ValidateUserEmail(email string) (*Users, error) {
+	data := &Users{}
 	filter := bson.M{collections.PARAM_EMAIL: email}
-	err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter).Decode(&Users{})
+	err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter).Decode(data)
 	if err != nil {
-		return status.Errorf(
+		return data, status.Errorf(
 			codes.Aborted,
 			fmt.Sprintln(errormsg.ERR_MSG_EMAIL_NOT_FOUND))
 	}
-	return nil
+	return data, nil
 }

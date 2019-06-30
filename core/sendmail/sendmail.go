@@ -23,7 +23,7 @@ func NewSender(Username, Password string) Sender {
 	return Sender{Username, Password}
 }
 
-func (sender Sender) SendMail(Dest []string, Subject, bodyMessage string) {
+func (sender Sender) SendMail(Dest []string, Subject, bodyMessage string) error {
 
 	msg := "From: " + sender.User + "\n" +
 		"To: " + strings.Join(Dest, ",") + "\n" +
@@ -36,10 +36,11 @@ func (sender Sender) SendMail(Dest []string, Subject, bodyMessage string) {
 	if err != nil {
 
 		fmt.Printf("smtp error: %s", err)
-		return
+		return err
 	}
 
 	fmt.Println("Mail sent successfully!")
+	return nil
 }
 
 func (sender Sender) WriteEmail(dest []string, contentType, subject, bodyMessage string) string {

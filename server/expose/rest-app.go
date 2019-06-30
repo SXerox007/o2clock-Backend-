@@ -10,6 +10,8 @@ import (
 	"o2clock/api-proto/home/logout"
 	"o2clock/api-proto/onboarding/accesstoken"
 	"o2clock/api-proto/onboarding/forgotpassword"
+	"o2clock/api-proto/onboarding/forgotpassword/resetpswd"
+
 	"o2clock/api-proto/onboarding/login"
 
 	"o2clock/api-proto/onboarding/register"
@@ -39,6 +41,7 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	err = chatpb.RegisterChatRoomHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = githubpb.RegisterGithubWebhookServicesHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = forgotpasswordpb.RegisterForgotPasswordServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
+	err = resetpswdpb.RegisterResetPasswordServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	if err != nil {
 		return err
 	}

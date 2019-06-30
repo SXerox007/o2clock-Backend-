@@ -238,3 +238,29 @@ INFO: 2019/06/28 18:35:09 brain.go:103: Exit the server with  interrupt
 INFO: 2019/06/28 18:35:14 brain.go:50: Start trace Important Error
 INFO: 2019/06/28 18:47:15 brain.go:103: Exit the server with  interrupt
 INFO: 2019/06/28 18:47:24 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 21:44:54 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 22:16:51 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 22:17:01 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 22:21:30 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 22:21:36 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 22:29:32 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 22:29:39 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 22:43:15 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 22:43:21 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:33:44 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:33:50 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:39:20 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:39:28 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:41:19 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:41:57 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:42:15 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:43:10 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:43:19 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:46:40 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:46:45 brain.go:50: Start trace Important Error
+INFO: 2019/06/30 23:52:28 brain.go:103: Exit the server with  interrupt
+INFO: 2019/06/30 23:52:36 brain.go:50: Start trace Important Error
+INFO: 2019/07/01 00:01:44 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/01 00:01:55 brain.go:50: Start trace Important Error
+INFO: 2019/07/01 00:45:15 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/01 00:45:25 brain.go:50: Start trace Important Error

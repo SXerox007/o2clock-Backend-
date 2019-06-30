@@ -58,3 +58,14 @@ const (
 	OFFLINE = 2
 	EXIT    = 3
 )
+
+// all events
+const (
+	EVENT_FORGOT_PSWD = 5001
+)
+
+// all states
+const (
+	STATE_LINK_GENERATE = 1
+	STATE_LINK_ERROR    = 2
+)
