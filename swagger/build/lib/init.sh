@@ -18,7 +18,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-source "build/lib/util.sh"
+source "swagger/build/lib/util.sh"
 
 
 # emulates "readlink -f" which is not available on BSD (OS X).

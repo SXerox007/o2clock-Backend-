@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"crypto/x509"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"mime"
 	"net/http"
@@ -14,6 +16,7 @@ import (
 	"o2clock/api-proto/onboarding/forgotpassword"
 	"o2clock/api-proto/onboarding/forgotpassword/resetpswd"
 	"o2clock/swagger/pkg/ui/data/swagger"
+	"strings"
 
 	"o2clock/api-proto/onboarding/login"
 
@@ -25,9 +28,16 @@ import (
 	"google.golang.org/grpc"
 )
 
+type myService struct{}
+
 var (
-	authpoint = flag.String("auth_end_points", "localhost:50051", "expose end point of oAuth")
+	authpoint    = flag.String("auth_end_points", "localhost:50051", "expose end point of oAuth")
+	demoCertPool *x509.CertPool
 )
+
+func newServer() *myService {
+	return new(myService)
+}
 
 func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	ctx := context.Background()
@@ -52,13 +62,17 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	// subMux := http.NewServeMux()
 	// subMux.HandleFunc("/sub_path", TestHandler)
 
-	// grpcMux := http.NewServeMux()
-	// grpcMux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
-	// 	io.Copy(w, strings.NewReader(pb.Swagger))
-	// })
+	grpcMux := http.NewServeMux()
+	grpcMux.HandleFunc("/test", TestHandler)
+	grpcMux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
+		io.Copy(w, strings.NewReader(forgotpasswordpb.Swagger))
+	})
+
+	grpcMux.Handle("/", mux)
+	serveSwagger(grpcMux)
 
 	log.Println("Starting Endpoint Exposed Server: localhost:5051")
-	http.ListenAndServe(address, mux)
+	http.ListenAndServe(address, grpcMux)
 	return nil
 }
 
@@ -85,8 +99,20 @@ func serveSwagger(mux *http.ServeMux) {
 	fileServer := http.FileServer(&assetfs.AssetFS{
 		Asset:    swagger.Asset,
 		AssetDir: swagger.AssetDir,
-		Prefix:   "third_party/swagger-ui",
+		Prefix:   "swagger/third_party/swagger-ui",
 	})
 	prefix := "/swagger-ui/"
 	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
+}
+
+// grpcHandlerFunc returns an http.Handler that delegates to grpcServer on incoming gRPC
+// connections or otherHandler otherwise. Copied from cockroachdb.
+func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			otherHandler.ServeHTTP(w, r)
+		}
+	})
 }

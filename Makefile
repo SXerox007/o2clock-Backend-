@@ -1,4 +1,4 @@
-.PHONY: all brain expose clean
+.PHONY: all brain expose swagger clean
 
 brain:
 	go run server/brain/brain.go

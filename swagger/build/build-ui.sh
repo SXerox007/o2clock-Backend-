@@ -2,7 +2,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-source "build/lib/init.sh"
+source "swagger/build/lib/init.sh"
 
 if ! which go-bindata > /dev/null 2>&1 ; then
   echo "Cannot find go-bindata. Install with \"go get github.com/jteeuwen/go-bindata/...\""
@@ -10,7 +10,7 @@ if ! which go-bindata > /dev/null 2>&1 ; then
 fi
 
 readonly TMP_DATAFILE="/tmp/datafile.go"
-readonly SWAGGER_SRC="third_party/swagger-ui/..."
+readonly SWAGGER_SRC="swagger/third_party/swagger-ui/..."
 readonly SWAGGER_PKG="swagger"
 
 function kube::hack::build_ui() {
