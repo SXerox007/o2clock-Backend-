@@ -264,3 +264,7 @@ INFO: 2019/07/01 00:01:44 brain.go:103: Exit the server with  interrupt
 INFO: 2019/07/01 00:01:55 brain.go:50: Start trace Important Error
 INFO: 2019/07/01 00:45:15 brain.go:103: Exit the server with  interrupt
 INFO: 2019/07/01 00:45:25 brain.go:50: Start trace Important Error
+INFO: 2019/07/01 17:21:35 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/01 17:21:41 brain.go:51: Start trace Important Error
+INFO: 2019/07/02 00:52:11 brain.go:104: Exit the server with  interrupt
+INFO: 2019/07/03 12:29:49 brain.go:51: Start trace Important Error
