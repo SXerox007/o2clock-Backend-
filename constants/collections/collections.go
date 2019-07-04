@@ -22,4 +22,5 @@ const (
 	PARAM_RECIVER_ID   = "reciver_id"
 	PARAM_USER_STATUS  = "status"
 	PARAM_PERSON_ID    = "person_id"
+	PARAM_LINK         = "link"
 )

@@ -19,6 +19,13 @@ curl -X GET http://localhost:5051/v1/chat/userslist
 
 # Curl forgot password
 curl -i -H "Content-Type: application/json" -X GET 'http://localhost:5051/v1/user/password/forgot?email=sumit@bonfleet.com'
+# OR
+curl -i -H "Content-Type: application/json" -X GET 'http://01ee3bcd.ngrok.io/v1/user/password/forgot?email=sumit@bonfleet.com'
+
+
+# Curl reset password
+curl -i -H "Content-Type: application/json" -X GET 'http://498821be.ngrok.io/v1/user/setpassword/xyx'
+
 
 # source keys
 source secure-keys/keys

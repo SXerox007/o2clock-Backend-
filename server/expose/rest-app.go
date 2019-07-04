@@ -9,12 +9,12 @@ import (
 	"log"
 	"mime"
 	"net/http"
+	"o2clock/api-desc/onboarding/forgotpassword/resetpswd"
 	"o2clock/api-proto/home"
 	"o2clock/api-proto/home/chat"
 	"o2clock/api-proto/home/logout"
 	"o2clock/api-proto/onboarding/accesstoken"
 	"o2clock/api-proto/onboarding/forgotpassword"
-	"o2clock/api-proto/onboarding/forgotpassword/resetpswd"
 	"o2clock/swagger/pkg/ui/data/swagger"
 	"strings"
 
@@ -55,7 +55,6 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	err = chatpb.RegisterChatRoomHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = githubpb.RegisterGithubWebhookServicesHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	err = forgotpasswordpb.RegisterForgotPasswordServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
-	err = resetpswdpb.RegisterResetPasswordServiceHandlerFromEndpoint(ctx, mux, *authpoint, dialOpts)
 	if err != nil {
 		return err
 	}
@@ -63,7 +62,9 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	// subMux.HandleFunc("/sub_path", TestHandler)
 
 	grpcMux := http.NewServeMux()
+	grpcMux.HandleFunc("/v1/user/setpassword/", resetpswd.ResetPasswordHandler)
 	grpcMux.HandleFunc("/test", TestHandler)
+
 	grpcMux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
 		io.Copy(w, strings.NewReader(forgotpasswordpb.Swagger))
 	})
@@ -102,6 +103,8 @@ func serveSwagger(mux *http.ServeMux) {
 		Prefix:   "swagger/third_party/swagger-ui",
 	})
 	prefix := "/swagger-ui/"
+	handle := http.StripPrefix(prefix, fileServer)
+	log.Println("Handler: ", handle, "Prefix: ", prefix, "File Server: ", fileServer)
 	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
 }
 
