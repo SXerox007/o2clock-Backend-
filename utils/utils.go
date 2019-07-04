@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"fmt"
 	"io"
+	"net/http"
 	"o2clock/constants/appconstant"
 	"runtime"
 	"time"
@@ -85,4 +86,7 @@ func RandomStringGenerateWithType(size int, randType string) string {
 	return string(bytes)
 }
 
-//
+// parse request
+func ParseRequest(r *http.Request, key string) string {
+	return r.PostFormValue(key)
+}

@@ -16,12 +16,28 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func UserResetPassword(url string, w http.ResponseWriter, r *http.Request) {
+// change password
+type ChangePasswrod struct {
+	Email      string
+	Phone      string
+	Password   string
+	Repassword string
+}
+
+// get user reset password
+func GetUserResetPassword(url string, w http.ResponseWriter, r *http.Request) {
 	data, err := GetResetUserPasswordInfo(url)
 	if err != nil {
 		log.Println("Error in Reset Password:", err)
 	}
 	OutputHTML(w, "./templates/static/reset_password.html", data)
+}
+
+// set user new password
+func SetUserNewPassword(w http.ResponseWriter, r *http.Request) {
+	log.Println("Request:", r)
+	OutputHTML(w, "./templates/static/error_500.html", nil)
+
 }
 
 // output html
