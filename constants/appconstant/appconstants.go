@@ -12,6 +12,8 @@ const (
 const (
 	MSG_SUCCESS             = "Success"
 	MSG_FAILURE             = "Error"
+	PSWD_SUCCESS            = "Password Success  :)"
+	PSWD_SUCCESS_MSG        = "Your change password is updated with success. Please login into app with the new password."
 	MSG_SOMETING_WENT_WRONG = "Something Went Wrong"
 )
 
@@ -68,4 +70,9 @@ const (
 const (
 	STATE_LINK_GENERATE = 1
 	STATE_LINK_ERROR    = 2
+)
+
+// URL
+const (
+	BASE_URL = "https://4cb08c85.ngrok.io"
 )

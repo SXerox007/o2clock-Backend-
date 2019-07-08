@@ -29,4 +29,5 @@ const (
 	ERR_MSG_EMAIL_NOT_FOUND        = "The Email you enter that does'nt belong to our customer."
 	ERR_SRV_NOT_RESPOND            = "Server not respond. Please try after some times. :("
 	ERR_PASSWORD_NOT_MATCH         = "Your password and re-password not match. :("
+	ERR_RESET_PSWD                 = "Error in Reset Password:"
 )

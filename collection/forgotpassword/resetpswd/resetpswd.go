@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"o2clock/collection/forgotpassword"
+	"o2clock/constants/appconstant"
 	"o2clock/constants/collections"
 	"o2clock/constants/errormsg"
 	"o2clock/db/mongodb"
@@ -38,7 +39,7 @@ type Error struct {
 func GetUserResetPassword(url string, w http.ResponseWriter, r *http.Request) {
 	data, err := GetResetUserPasswordInfo(url)
 	if err != nil {
-		log.Println("Error in Reset Password:", err)
+		log.Println(errormsg.ERR_RESET_PSWD, err)
 	}
 	OutputHTML(w, "./templates/static/reset_password.html", data)
 }
@@ -52,8 +53,8 @@ func SetUserNewPassword(w http.ResponseWriter, r *http.Request) {
 	repass := utils.ParseRequest(r, "repassword")
 	email := utils.ParseRequest(r, "email")
 	resp.Status = http.StatusOK
-	resp.Title = "Password Success  :)"
-	resp.Message = "Your change password is updated with success. Please login into app with the new password."
+	resp.Title = appconstant.PSWD_SUCCESS
+	resp.Message = appconstant.PSWD_SUCCESS_MSG
 	resp.Style = "color:green"
 	if pass == repass {
 		// set new passsword
