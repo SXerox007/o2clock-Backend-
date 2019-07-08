@@ -19,14 +19,14 @@ import (
 )
 
 func LoginUser(req *loginpb.LoginRequest) (string, error) {
-	id, username, err := validationUserExist(req)
+	id, username, err := ValidationUserExist(req)
 	if err != nil {
 		return "", err
 	}
 	return accesstoken.UpdateAccessToken(id, username)
 }
 
-func validationUserExist(req *loginpb.LoginRequest) (objectid.ObjectID, string, error) {
+func ValidationUserExist(req *loginpb.LoginRequest) (objectid.ObjectID, string, error) {
 	data := &allusers.Users{}
 	filter := bson.M{collections.PARAM_USER_NAME: req.GetUsernameEmail()}
 	res := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).FindOne(context.Background(), filter)

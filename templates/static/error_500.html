@@ -143,8 +143,9 @@ h1, h2 {
     <body>
             <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed:100,200,300,400" rel="stylesheet">
             <body class="loading">
-              <h1>500</h1>
-              <h2>Unexpected Error <b>:(</b></h2>
+              <h1>{{.Status}}</h1>
+              <h2>{{.Title}}</h2>
+              <h2 style="{{.Style}}">{{.Message}}</h2>
               <div class="gears">
                 <div class="gear one">
                   <div class="bar"></div>

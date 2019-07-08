@@ -10,6 +10,6 @@ func ResetPasswordHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		resetpswd.SetUserNewPassword(w, r)
 	} else {
-		resetpswd.GetUserResetPassword("http://01ee3bcd.ngrok.io"+r.RequestURI, w, r)
+		resetpswd.GetUserResetPassword("https://4cb08c85.ngrok.io"+r.RequestURI, w, r)
 	}
 }

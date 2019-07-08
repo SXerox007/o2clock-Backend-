@@ -10,6 +10,8 @@ import (
 	"o2clock/constants/collections"
 	"o2clock/constants/errormsg"
 	"o2clock/db/mongodb"
+	"o2clock/utils"
+	"o2clock/utils/pswdmanager"
 
 	"github.com/mongodb/mongo-go-driver/bson"
 	"google.golang.org/grpc/codes"
@@ -24,6 +26,14 @@ type ChangePasswrod struct {
 	Repassword string
 }
 
+// error
+type Error struct {
+	Status  int
+	Message string
+	Title   string
+	Style   string
+}
+
 // get user reset password
 func GetUserResetPassword(url string, w http.ResponseWriter, r *http.Request) {
 	data, err := GetResetUserPasswordInfo(url)
@@ -35,9 +45,32 @@ func GetUserResetPassword(url string, w http.ResponseWriter, r *http.Request) {
 
 // set user new password
 func SetUserNewPassword(w http.ResponseWriter, r *http.Request) {
-	log.Println("Request:", r)
-	OutputHTML(w, "./templates/static/error_500.html", nil)
-
+	mongodb.InitDB()
+	defer mongodb.CloseMongoDB()
+	var resp Error
+	pass := utils.ParseRequest(r, "password")
+	repass := utils.ParseRequest(r, "repassword")
+	email := utils.ParseRequest(r, "email")
+	resp.Status = http.StatusOK
+	resp.Title = "Password Success  :)"
+	resp.Message = "Your change password is updated with success. Please login into app with the new password."
+	resp.Style = "color:green"
+	if pass == repass {
+		// set new passsword
+		if err := SetNewPassword(email, pswdmanager.GetPswdHash([]byte(pass))); err != nil {
+			resp.Status = http.StatusInternalServerError
+			resp.Title = errormsg.ERR_MSG_INTERNAL_SERVER
+			resp.Message = errormsg.ERR_SRV_NOT_RESPOND
+			resp.Style = "color:red"
+		}
+		OutputHTML(w, "./templates/static/error_500.html", resp)
+	} else {
+		resp.Status = http.StatusPreconditionRequired
+		resp.Title = errormsg.ERR_MSG_PSWD_DECODE
+		resp.Message = errormsg.ERR_PASSWORD_NOT_MATCH
+		resp.Style = "color:red"
+		OutputHTML(w, "./templates/static/error_500.html", resp)
+	}
 }
 
 // output html
@@ -71,4 +104,12 @@ func GetResetUserPasswordInfo(url string) (*forgotpassword.ForgotPasswordAttempt
 	}
 	mongodb.CloseMongoDB()
 	return data, nil
+}
+
+// set new password
+func SetNewPassword(email, passwordHash string) error {
+	filter := bson.M{collections.PARAM_EMAIL: email}
+	updateFilter := bson.M{"$set": bson.M{collections.PARAM_PSWD: passwordHash}}
+	_, err := mongodb.CreateCollection(collections.COLLECTIONS_ALL_USERS).UpdateOne(context.Background(), filter, updateFilter)
+	return err
 }
