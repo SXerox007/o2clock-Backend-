@@ -48,7 +48,7 @@ func UserForgotPassword(email string) error {
 	if err != nil {
 		return err
 	}
-	var link = "https://4cb08c85.ngrok.io/v1/user/setpassword/" + utils.RandomStringGenerateWithType(32, appconstant.ALPHA_NUM)
+	var link = appconstant.BASE_URL + "/v1/user/setpassword/" + utils.RandomStringGenerateWithType(32, appconstant.ALPHA_NUM)
 	var replacer = strings.NewReplacer("text-link-forgot", "<a href='"+link+"' target='_blank'>"+link+"</a>", "button-link-forgot", "href='"+link+"'")
 	output := replacer.Replace(string(message))
 	bodyMessage := sender.WriteHTMLEmail(Receiver, Subject, output)

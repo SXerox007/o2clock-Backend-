@@ -69,10 +69,11 @@ const (
 // all states
 const (
 	STATE_LINK_GENERATE = 1
+	STATE_LINK_INACTIVE = 0
 	STATE_LINK_ERROR    = 2
 )
 
 // URL
 const (
-	BASE_URL = "https://4cb08c85.ngrok.io"
+	BASE_URL = "https://92de1297.ngrok.io"
 )

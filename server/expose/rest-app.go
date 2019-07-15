@@ -4,18 +4,18 @@ import (
 	"context"
 	"crypto/x509"
 	"flag"
-	"fmt"
 	"io"
 	"log"
-	"mime"
 	"net/http"
 	"o2clock/api-desc/onboarding/forgotpassword/resetpswd"
+	ctest "o2clock/collection/forgotpassword/resetpswd"
+	"path"
+
 	"o2clock/api-proto/home"
 	"o2clock/api-proto/home/chat"
 	"o2clock/api-proto/home/logout"
 	"o2clock/api-proto/onboarding/accesstoken"
 	"o2clock/api-proto/onboarding/forgotpassword"
-	"o2clock/swagger/pkg/ui/data/swagger"
 	"strings"
 
 	"o2clock/api-proto/onboarding/login"
@@ -24,7 +24,6 @@ import (
 	"o2clock/api-proto/webhooks/git"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/philips/go-bindata-assetfs"
 	"google.golang.org/grpc"
 )
 
@@ -58,8 +57,6 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	if err != nil {
 		return err
 	}
-	// subMux := http.NewServeMux()
-	// subMux.HandleFunc("/sub_path", TestHandler)
 
 	grpcMux := http.NewServeMux()
 	grpcMux.HandleFunc("/v1/user/setpassword/", resetpswd.ResetPasswordHandler)
@@ -70,7 +67,8 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 	})
 
 	grpcMux.Handle("/", mux)
-	serveSwagger(grpcMux)
+	// serveSwagger(grpcMux)
+	grpcMux.HandleFunc("/swagger/", serveSwagger)
 
 	log.Println("Starting Endpoint Exposed Server: localhost:5051")
 	http.ListenAndServe(address, grpcMux)
@@ -79,7 +77,8 @@ func ExposePoint(address string, opts ...runtime.ServeMuxOption) error {
 
 // test handler
 func TestHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome to o2Clock.")
+	ctest.OutputHTML(w, "./templates/static/test.html", nil)
+	return
 }
 
 func main() {
@@ -93,29 +92,8 @@ func Init() {
 }
 
 // serve swagger
-func serveSwagger(mux *http.ServeMux) {
-	mime.AddExtensionType(".svg", "image/svg+xml")
-
-	// Expose files in third_party/swagger-ui/ on <host>/swagger-ui
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    swagger.Asset,
-		AssetDir: swagger.AssetDir,
-		Prefix:   "swagger/third_party/swagger-ui",
-	})
-	prefix := "/swagger-ui/"
-	handle := http.StripPrefix(prefix, fileServer)
-	log.Println("Handler: ", handle, "Prefix: ", prefix, "File Server: ", fileServer)
-	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
-}
-
-// grpcHandlerFunc returns an http.Handler that delegates to grpcServer on incoming gRPC
-// connections or otherHandler otherwise. Copied from cockroachdb.
-func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
-			grpcServer.ServeHTTP(w, r)
-		} else {
-			otherHandler.ServeHTTP(w, r)
-		}
-	})
+func serveSwagger(w http.ResponseWriter, r *http.Request) {
+	p := strings.TrimPrefix(r.URL.Path, "/swagger/")
+	p = path.Join("swagger/third_party/swagger-new/swagger-ui/", p)
+	http.ServeFile(w, r, p)
 }

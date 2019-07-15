@@ -23,4 +23,5 @@ const (
 	PARAM_USER_STATUS  = "status"
 	PARAM_PERSON_ID    = "person_id"
 	PARAM_LINK         = "link"
+	PARAM_STATE        = "state"
 )

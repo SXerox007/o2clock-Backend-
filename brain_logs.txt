@@ -366,3 +366,93 @@ ERROR: 2019/07/08 21:37:25 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt:
 ERROR: 2019/07/08 21:37:27 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
 INFO: 2019/07/08 23:00:16 brain.go:103: Exit the server with  interrupt
 INFO: 2019/07/08 23:00:32 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 13:09:33 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 13:09:42 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 15:59:49 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 16:00:03 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 16:02:31 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 16:02:39 brain.go:50: Start trace Important Error
+ERROR: 2019/07/09 16:07:31 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:55:18 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:55:23 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:55:29 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:55:34 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:55:45 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 16:56:18 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+INFO: 2019/07/09 17:22:31 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 17:22:45 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 17:58:33 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 17:58:44 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 18:00:54 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 18:00:59 brain.go:50: Start trace Important Error
+ERROR: 2019/07/09 18:23:12 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 18:23:39 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 18:28:17 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+ERROR: 2019/07/09 18:28:23 pswdmanager.go:22: Verify Pswd Error:  crypto/bcrypt: hashedPassword is not the hash of the given password
+INFO: 2019/07/09 18:38:58 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 18:58:44 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 19:14:21 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 19:14:32 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 19:14:48 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 19:15:10 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 19:16:01 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 19:17:08 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 22:46:07 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 22:46:11 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 22:46:57 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 22:58:28 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 22:58:41 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 23:08:58 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 23:09:07 brain.go:50: Start trace Important Error
+INFO: 2019/07/09 23:29:34 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/09 23:42:45 brain.go:50: Start trace Important Error
+INFO: 2019/07/10 01:02:05 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/10 01:02:20 brain.go:50: Start trace Important Error
+INFO: 2019/07/10 01:09:57 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/10 01:10:10 brain.go:50: Start trace Important Error
+INFO: 2019/07/10 01:19:14 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 12:11:07 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 12:15:29 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 12:15:37 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 12:32:09 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 12:32:14 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 12:32:19 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 12:32:46 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:29:07 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:29:13 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:31:00 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:31:05 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:34:20 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:34:27 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:36:17 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:36:22 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:39:53 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:39:58 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 14:41:29 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 14:41:35 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 18:29:17 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 18:29:26 brain.go:50: Start trace Important Error
+INFO: 2019/07/11 22:31:46 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/11 22:31:57 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 12:48:56 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 12:49:04 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 16:16:04 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 16:16:23 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 16:46:42 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 16:58:03 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 17:44:04 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 17:44:12 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 17:46:54 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 17:46:59 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 17:48:06 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 17:48:12 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 18:06:36 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/12 18:06:41 brain.go:50: Start trace Important Error
+INFO: 2019/07/12 18:08:25 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/13 18:42:41 brain.go:50: Start trace Important Error
+INFO: 2019/07/13 18:54:41 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/13 18:54:51 brain.go:50: Start trace Important Error
+INFO: 2019/07/13 18:55:51 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/13 18:55:57 brain.go:50: Start trace Important Error
+INFO: 2019/07/13 18:57:34 brain.go:103: Exit the server with  interrupt
+INFO: 2019/07/13 19:06:20 brain.go:50: Start trace Important Error

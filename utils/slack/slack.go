@@ -56,3 +56,12 @@ func SendRequestInfomation(ev *slack.MessageEvent) error {
 	}
 	return nil
 }
+
+func CommonSendMsgSlack(msg, channel string) error {
+	_, _, err := slackclient.GetSlackClient().PostMessage(channel, slack.MsgOptionText(msg, true))
+	if err != nil {
+		log.Error.Println(errormsg.ERR_SLACK, err)
+		return err
+	}
+	return nil
+}

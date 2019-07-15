@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/handsontable@7.1.0/dist/handsontable.full.min.css" rel="stylesheet" media="screen">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="example"></div>
+    <script src="https://cdn.jsdelivr.net/npm/handsontable@7.1.0/dist/handsontable.full.min.js"></script>
+    <script type="text/javascript">
+    var data = [
+          ['', 'Ford', 'Tesla', 'Toyota', 'Honda'],
+          ['2017', 10, 11, 12, 13],
+          ['2018', 20, 11, 14, 13],
+          ['2019', 30, 15, 12, 13]
+        ];
+
+        var container = document.getElementById('example');
+        var hot = new Handsontable(container, {
+          data: data,
+          rowHeaders: true,
+          colHeaders: true,
+          filters: true,
+          dropdownMenu: true,
+          licenseKey: 'non-commercial-and-evaluation'
+        });
+    </script>
+</body>
+
+</html>

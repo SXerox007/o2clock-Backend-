@@ -30,4 +30,6 @@ const (
 	ERR_SRV_NOT_RESPOND            = "Server not respond. Please try after some times. :("
 	ERR_PASSWORD_NOT_MATCH         = "Your password and re-password not match. :("
 	ERR_RESET_PSWD                 = "Error in Reset Password:"
+	ERR_LINK_EXPIRED               = "Link is expired"
+	ERR_LINK_EXPIRED_MSG           = "Link is exprired or used. If you still want to change your password then go to forgot password in app."
 )
