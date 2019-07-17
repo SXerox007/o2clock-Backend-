@@ -2,11 +2,18 @@
     "swagger": "2.0",
     "info": {
       "title": "Documentation",
-      "version": "version: v1.0"
+      "version": "version: v1.0",
+      "description":"Micoservice with Expose End point on REST",
+      "contact": {
+        "name": "Sumit Thakur",
+        "url": "https://github.com/SXerox007",
+        "email": "sumitthakur769@gmail.com"  
+    }
     },
     "schemes": [
       "http",
-      "https"
+      "https",
+      "tcp"
     ],
     "consumes": [
       "application/json"
