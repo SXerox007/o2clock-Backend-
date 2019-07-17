@@ -75,5 +75,5 @@ const (
 
 // URL
 const (
-	BASE_URL = "https://92de1297.ngrok.io"
+	BASE_URL = "https://e7813162.ngrok.io"
 )

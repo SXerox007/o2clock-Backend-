@@ -1,0 +1,456 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Documentation",
+      "version": "version: v1.0"
+    },
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/v1/user/password/forgot": {
+        "get": {
+          "operationId": "ForgotPassowrdUserService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/forgotpasswordpbForgotPasswordResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "email",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "phone",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "ForgotPasswordService"
+          ]
+        }
+      }, 
+        "/v1/user/accesstoken": {
+        "get": {
+          "operationId": "CheckAccessTokenService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/accesstokenpbAccessTokenResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "access_token",
+              "in": "query",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "tags": [
+            "AccessTokenService"
+          ]
+        }
+      },
+      "/v1/user/login": {
+        "post": {
+          "operationId": "LoginUserService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/loginpbLoginResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/loginpbLoginRequest"
+              }
+            }
+          ],
+          "tags": [
+            "LoginService"
+          ]
+        }
+      },
+      "/v1/user/register/{phone}": {
+        "post": {
+          "operationId": "RegisterUserService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/regsiterpbRegisterUserResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "phone",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/regsiterpbRegisterUserRequest"
+              }
+            }
+          ],
+          "tags": [
+            "RegisterService"
+          ]
+        }
+      },
+      "/v1/github/push": {
+        "post": {
+          "operationId": "FetchGithubPushCommitInfo",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/githubpbCommonResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/githubpbGithubPushWebhookRequest"
+              }
+            }
+          ],
+          "tags": [
+            "GithubWebhookServices"
+          ]
+        }
+      },
+      "/v1/user/verify": {
+        "post": {
+          "operationId": "UserVerifyService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/homepbVerifyUserResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "description": " (streaming inputs)",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/homepbVerifyUserRequest"
+              }
+            }
+          ],
+          "tags": [
+            "VerifyService"
+          ]
+        }
+      },
+      "/v1/user/logout": {
+        "post": {
+          "operationId": "LogoutUserService",
+          "responses": {
+            "200": {
+              "description": "A successful response.",
+              "schema": {
+                "$ref": "#/definitions/logoutpbLogoutResponse"
+              }
+            }
+          },
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/logoutpbLogoutRequest"
+              }
+            }
+          ],
+          "tags": [
+            "LogoutService"
+          ]
+        }
+      }
+    },
+    "definitions": {
+      "forgotpasswordpbForgotPasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "verify_code": {
+            "type": "string"
+          }
+        }
+      },
+      "accesstokenpbAccessTokenResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "loginpbLoginRequest": {
+        "type": "object",
+        "properties": {
+          "username_email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "loginpbLoginResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "access_token": {
+            "type": "string"
+          }
+        }
+      },
+      "regsiterpbLocation": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lan": {
+            "type": "number",
+            "format": "double"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      },
+      "regsiterpbRegisterUserRequest": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "country_code": {
+            "type": "string"
+          },
+          "location": {
+            "$ref": "#/definitions/regsiterpbLocation"
+          },
+          "user_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "regsiterpbRegisterUserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "access_token": {
+            "type": "string"
+          }
+        }
+      },
+      "githubpbCommonResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "githubpbGithubCommits": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "tree_id": {
+            "type": "string"
+          },
+          "distinct": {
+            "type": "boolean",
+            "format": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "githubpbGithubPushWebhookRequest": {
+        "type": "object",
+        "properties": {
+          "ref": {
+            "type": "string"
+          },
+          "head": {
+            "type": "string"
+          },
+          "before": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "distinct_size": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "commits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/githubpbGithubCommits"
+            }
+          }
+        }
+      },
+      "homepbUserInfo": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          },
+          "lat": {
+            "type": "number",
+            "format": "double"
+          },
+          "lan": {
+            "type": "number",
+            "format": "double"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      },
+      "homepbVerifyUserRequest": {
+        "type": "object",
+        "properties": {
+          "info": {
+            "$ref": "#/definitions/homepbUserInfo"
+          },
+          "file_chunk": {
+            "type": "string",
+            "format": "byte"
+          }
+        }
+      },
+      "homepbVerifyUserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "logoutpbLogoutRequest": {
+        "type": "object",
+        "properties": {
+          "access_token": {
+            "type": "string"
+          }
+        }
+      },
+      "logoutpbLogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+  

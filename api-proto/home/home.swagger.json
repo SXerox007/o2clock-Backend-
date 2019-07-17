@@ -1,0 +1,91 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api-proto/home/home.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/user/verify": {
+      "post": {
+        "operationId": "UserVerifyService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/homepbVerifyUserResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": " (streaming inputs)",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/homepbVerifyUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "VerifyService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "homepbUserInfo": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "lat": {
+          "type": "number",
+          "format": "double"
+        },
+        "lan": {
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "homepbVerifyUserRequest": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/homepbUserInfo"
+        },
+        "file_chunk": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "homepbVerifyUserResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}

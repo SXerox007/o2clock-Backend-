@@ -1,0 +1,116 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api-proto/onboarding/register/register.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/user/register/{phone}": {
+      "post": {
+        "operationId": "RegisterUserService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/regsiterpbRegisterUserResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "phone",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/regsiterpbRegisterUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RegisterService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "regsiterpbLocation": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "format": "double"
+        },
+        "lan": {
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "regsiterpbRegisterUserRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/regsiterpbLocation"
+        },
+        "user_name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "regsiterpbRegisterUserResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "access_token": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

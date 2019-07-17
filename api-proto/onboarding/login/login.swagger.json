@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "api-proto/onboarding/forgotpassword/forgotpassword.proto",
+    "title": "api-proto/onboarding/login/login.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -15,39 +15,46 @@
     "application/json"
   ],
   "paths": {
-    "/v1/user/password/forgot": {
-      "get": {
-        "operationId": "ForgotPassowrdUserService",
+    "/v1/user/login": {
+      "post": {
+        "operationId": "LoginUserService",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/forgotpasswordpbForgotPasswordResponse"
+              "$ref": "#/definitions/loginpbLoginResponse"
             }
           }
         },
         "parameters": [
           {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "phone",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginpbLoginRequest"
+            }
           }
         ],
         "tags": [
-          "ForgotPasswordService"
+          "LoginService"
         ]
       }
     }
   },
   "definitions": {
-    "forgotpasswordpbForgotPasswordResponse": {
+    "loginpbLoginRequest": {
+      "type": "object",
+      "properties": {
+        "username_email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "loginpbLoginResponse": {
       "type": "object",
       "properties": {
         "message": {
@@ -57,7 +64,7 @@
           "type": "integer",
           "format": "int32"
         },
-        "verify_code": {
+        "access_token": {
           "type": "string"
         }
       }

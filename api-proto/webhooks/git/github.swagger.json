@@ -1,0 +1,111 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api-proto/webhooks/git/github.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/github/push": {
+      "post": {
+        "operationId": "FetchGithubPushCommitInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/githubpbCommonResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/githubpbGithubPushWebhookRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GithubWebhookServices"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "githubpbCommonResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "githubpbGithubCommits": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "tree_id": {
+          "type": "string"
+        },
+        "distinct": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "githubpbGithubPushWebhookRequest": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string"
+        },
+        "head": {
+          "type": "string"
+        },
+        "before": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "distinct_size": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "commits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/githubpbGithubCommits"
+          }
+        }
+      }
+    }
+  }
+}
