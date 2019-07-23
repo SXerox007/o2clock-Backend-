@@ -85,6 +85,7 @@ func main() {
 	Init()
 }
 
+// initilization
 func Init() {
 	if err := ExposePoint(":5051"); err != nil {
 		log.Fatal("Error in serve", err)
