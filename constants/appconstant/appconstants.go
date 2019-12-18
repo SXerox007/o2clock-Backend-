@@ -77,3 +77,8 @@ const (
 const (
 	BASE_URL = "http://223010cb.ap.ngrok.io"
 )
+
+// extras
+const (
+	MAX_QUEUE = 3
+)

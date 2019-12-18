@@ -34,3 +34,17 @@ openssl genrsa -out secure-keys/o2clock.rsa
 
 # mongodb clear collection
 db.all_single_chats.remove({})
+
+# to start ngrok
+ngrok start --all
+
+# build 
+	go build -o o2clock-brain server/brain/brain.go
+	./o2clock-brain
+    go build -o o2clock-expose server/expose/rest-app.go
+	./o2clock-expose
+
+# check if port is in use
+	sudo lsof -i -P -n
+	sudo lsof -i -P -n | grep LISTEN
+
